@@ -2,16 +2,16 @@
 
 This is a Zeebe worker to evaluate scripts. Scripts are useful to create/modify the payload, to do (simple) calculations or for prototyping.
 
-* the worker is registered for the type 'script'
+* the worker is registered for the type `script`
 * required custom headers:
-  * 'language' (String) - the name of the script language
-  * 'script' (String) - the script to evaluate
-* output payload contains 'result' - the result of the evaluation   
+  * `language` (String) - the name of the script language
+  * `script` (String) - the script to evaluate
+* output payload contains `result` - the result of the evaluation   
 
 Available script languages:
-* javascript
-* groovy
-* feel
+* javascript (Oracle Nashorn)
+* [groovy](http://groovy-lang.org/)
+* [feel](https://github.com/camunda/feel-scala)
 
 _This is a community project meant for playing around with Zeebe. It is not officially supported by the Zeebe Team (i.e. no gurantees). Everybody is invited to contribute!_
 
@@ -32,17 +32,13 @@ The service task:
 
 The job's payload:
 ```json
-{
-  "a": 2,
-  "b": 3,
-}
+{ "a": 2,
+  "b": 3 }
 ```
 
 The job's result payload:
 ```json
-{
-  "result": 5
-}
+{ "result": 5 }
 ```
 
 ## Examples
