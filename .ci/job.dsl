@@ -85,10 +85,6 @@ mavenJob(jobName)
     providedSettings mavenSettingsId
     mavenInstallation mavenVersion
 
-    postBuildSteps('SUCCESS') {
-        shell dockerSnapshot
-    }
-
     wrappers
     {
         timestamps()
@@ -152,8 +148,6 @@ mavenJob(jobName)
                 }
 
                 shell githubRelease
-
-                shell dockerRelease
 
             }
 
