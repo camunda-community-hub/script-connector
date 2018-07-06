@@ -42,18 +42,92 @@ The job's result payload:
 ```
 
 ## Examples
+Some examples for common use cases:
 
-### JavaScript
+### Single Value
 
-...
+JavaScript:
+```javascript
+'url?id=' + id
+```
 
-### FEEL
+Result:
+```json
+{"result": "url?id=123"}
+```
 
-...
+### Complex Value
 
-### Groovy
+JavaScript:
+```javascript
+result = {};
+result.orderId = id;
+result.price = price * 1.20;
+result;
+```
+Groovy:
+```groovy
+[orderId:id,
+ price:price * 1.20 ]
+```
 
-...
+FEEL:
+```
+{orderId:id,
+ price:price * 1.20 }
+```
+
+Result:
+```json
+{"result": {
+ "orderId": 123,
+ "price": 120.0 }}
+```
+
+### Aggregation
+
+Jobs' payload:
+```json
+{"order": {
+ "id": 123,
+ "items": [
+  {"id":"i1", "price":5.99},
+  {"id":"i2", "price":29.99},
+  {"id":"i3", "price":10.00}
+ ]}}
+```
+
+FEEL:
+```
+sum(order.items.price)
+```
+
+Result:
+```json
+{"result": 45.98}
+```
+
+FEEL:
+```
+some item in order.items satisfies item.price > 20.00
+```
+
+Result:
+```json
+{"result": true}
+```
+
+FEEL:
+```
+order.items[price >= 10.00]
+```
+
+Result:
+```json
+{"result": [
+ {"id":"i2", "price":29.99},
+ {"id":"i3", "price":10.00} ]}
+```
 
 ## How to build
 
