@@ -105,5 +105,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<scm>
+		<url>https://github.com/zeebe-io/zeebe-script-worker</url>
+		<connection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</connection>
+		<developerConnection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
 </project>
