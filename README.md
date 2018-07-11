@@ -99,34 +99,14 @@ Jobs' payload:
 
 FEEL:
 ```
-sum(order.items.price)
-```
+sum(order.items.price)                                    
+// result: 45.98
 
-Result:
-```json
-{"result": 45.98}
-```
+some item in order.items satisfies item.price > 20.00     
+// result: true
 
-FEEL:
-```
-some item in order.items satisfies item.price > 20.00
-```
-
-Result:
-```json
-{"result": true}
-```
-
-FEEL:
-```
-order.items[price >= 10.00]
-```
-
-Result:
-```json
-{"result": [
- {"id":"i2", "price":29.99},
- {"id":"i3", "price":10.00} ]}
+order.items[price >= 10.00]                               
+// result: [{"id":"i2", "price":29.99}, {"id":"i3", "price":10.00}]
 ```
 
 ## How to build
