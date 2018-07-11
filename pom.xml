@@ -7,10 +7,26 @@
 	<version>0.2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
+	<parent>
+		<groupId>org.camunda</groupId>
+		<artifactId>camunda-release-parent</artifactId>
+		<version>2.5</version>
+		<!-- do not remove empty tag - http://jira.codehaus.org/browse/MNG-4687 -->
+		<relativePath />
+	</parent>
+
 	<properties>
 		<version.zeebe>0.11.0</version.zeebe>
 		<version.groovy>2.4.15</version.groovy>
 		<version.feel>1.5.0</version.feel>
+
+		<!-- release parent settings -->
+		<version.java>1.8</version.java>
+		<nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</nexus.snapshot.repository>
+		<nexus.release.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io/</nexus.release.repository>
+
+		<!-- disable jdk8 javadoc checks on release build -->
+		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
 
 	<dependencyManagement>
@@ -18,13 +34,6 @@
 			<dependency>
 				<groupId>io.zeebe</groupId>
 				<artifactId>zb-bom</artifactId>
-				<version>${version.zeebe}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>io.zeebe</groupId>
-				<artifactId>zb-parent</artifactId>
 				<version>${version.zeebe}</version>
 				<scope>import</scope>
 				<type>pom</type>
@@ -82,14 +91,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.0.3.RELEASE</version>
@@ -104,24 +105,32 @@
 		</plugins>
 	</build>
 	
-	<profiles>
-		<profile>
-			<id>sonatype-oss-release</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<configuration>
-							<!-- skip gpg signing as the release is not pushed to maven central -->
-							<skip>true</skip>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-	
+	<repositories>
+		<repository>
+			<id>zeebe</id>
+			<name>Zeebe Repository</name>
+			<url>https://app.camunda.com/nexus/content/repositories/zeebe-io/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>zeebe-snapshots</id>
+			<name>Zeebe Snapshot Repository</name>
+			<url>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<scm>
 		<url>https://github.com/zeebe-io/zeebe-script-worker</url>
 		<connection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</connection>
