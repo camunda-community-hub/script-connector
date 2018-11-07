@@ -26,11 +26,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ZeebeScriptWorkerApplication {
 
-  @Value("${zeebe.client.broker.contactPoint:127.0.0.1:51015}")
+  @Value("${zeebe.client.broker.contactPoint:127.0.0.1:26500}")
   private String contactPoint;
-
-  @Value("${zeebe.client.topic:default-topic}")
-  private String topic;
 
   @Autowired private ScriptJobHandler jobHandler;
 
@@ -44,11 +41,10 @@ public class ZeebeScriptWorkerApplication {
     final ZeebeClient client =
         ZeebeClient.newClientBuilder()
             .brokerContactPoint(contactPoint)
-            .defaultTopic(topic)
             .defaultJobWorkerName("script-worker")
             .defaultJobTimeout(Duration.ofSeconds(10))
             .build();
 
-    client.topicClient().jobClient().newWorker().jobType("script").handler(jobHandler).open();
+    client.jobClient().newWorker().jobType("script").handler(jobHandler).open();
   }
 }

@@ -16,7 +16,7 @@
 package io.zeebe.script;
 
 import io.zeebe.client.api.clients.JobClient;
-import io.zeebe.client.api.events.JobEvent;
+import io.zeebe.client.api.response.ActivatedJob;
 import io.zeebe.client.api.subscription.JobHandler;
 import java.util.Collections;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class ScriptJobHandler implements JobHandler {
   @Autowired private ScriptEvaluator scriptEvaluator;
 
   @Override
-  public void handle(JobClient client, JobEvent job) {
+  public void handle(JobClient client, ActivatedJob job) {
 
     final Map<String, Object> customHeaders = job.getCustomHeaders();
     final String language = getLanguage(customHeaders);
@@ -42,7 +42,10 @@ public class ScriptJobHandler implements JobHandler {
 
     final Object result = scriptEvaluator.evaluate(language, script, payload);
 
-    client.newCompleteCommand(job).payload(Collections.singletonMap("result", result)).send();
+    client
+        .newCompleteCommand(job.getKey())
+        .payload(Collections.singletonMap("result", result))
+        .send();
   }
 
   private String getLanguage(Map<String, Object> customHeaders) {

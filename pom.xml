@@ -16,7 +16,7 @@
 	</parent>
 
 	<properties>
-		<version.zeebe>0.11.0</version.zeebe>
+		<version.zeebe>0.13.0</version.zeebe>
 		<version.groovy>2.4.15</version.groovy>
 		<version.feel>1.5.0</version.feel>
 
@@ -83,6 +83,7 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
+			<version>3.10.0</version>
 			<scope>test</scope>
 		</dependency>
 

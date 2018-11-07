@@ -41,6 +41,26 @@ The job's result payload:
 { "result": 5 }
 ```
 
+## How to build
+
+Build with Maven
+
+`mvn clean install`
+
+## How to run
+
+Execute the JAR file via
+
+`java -jar target/zeebe-script-worker-{VERSION}.jar`
+
+## How to configure
+
+The worker can be configured via environment variables or a properties file `application.properties`.
+
+```
+zeebe.client.broker.contactPoint=127.0.0.1:26500
+```
+
 ## Examples
 Some examples for common use cases:
 
@@ -107,27 +127,6 @@ some item in order.items satisfies item.price > 20.00
 
 order.items[price >= 10.00]                               
 // result: [{"id":"i2", "price":29.99}, {"id":"i3", "price":10.00}]
-```
-
-## How to build
-
-Build with Maven
-
-`mvn clean install`
-
-## How to run
-
-Execute the JAR file via
-
-`java -jar target/zeebe-script-worker-{VERSION}.jar`
-
-## How to configure
-
-The worker can be configured via environment variables or a properties file `application.properties`.
-
-```
-zeebe.client.broker.contactPoint=127.0.0.1:51015
-zeebe.client.topic=default-topic
 ```
 
 ## Code of Conduct
