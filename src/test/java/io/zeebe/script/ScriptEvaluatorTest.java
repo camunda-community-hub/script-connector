@@ -89,7 +89,7 @@ public class ScriptEvaluatorTest {
   @Test
   public void shouldThrowExceptionIfScriptEngineNotFound() {
     assertThatThrownBy(() -> scriptEvaluator.evaluate("foobar", "", Collections.emptyMap()))
-        .hasMessage("No script engine found with name 'foobar'");
+        .hasCause(new RuntimeException("No script engine found with name 'foobar'"));
   }
 
   @Test

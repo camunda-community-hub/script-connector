@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <name>Zeebe Script Worker</name>
@@ -29,6 +31,7 @@
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+		<version.graalvm>1.0.0-rc9</version.graalvm>
 
         <!-- release parent settings -->
         <nexus.snapshot.repository>https://artifacts.camunda.com/artifactory/zeebe-io-snapshots/
@@ -113,6 +116,18 @@
             <artifactId>feel-engine</artifactId>
             <version>${version.feel}</version>
         </dependency>
+
+		<dependency>
+			<groupId>org.graalvm.sdk</groupId>
+			<artifactId>graal-sdk</artifactId>
+			<version>${version.graalvm}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.graalvm.js</groupId>
+			<artifactId>js</artifactId>
+			<version>${version.graalvm}</version>
+		</dependency>
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -241,9 +256,9 @@
                             </gpgArguments>
                         </configuration>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
+		</plugins>
+	</build>
+</profile>
     </profiles>
 
     <repositories>

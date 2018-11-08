@@ -6,6 +6,12 @@
 
 [![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-0072Ce)](https://github.com/camunda-community-hub/community/blob/main/extension-lifecycle.md#compatiblilty)
 
+Available script languages:
+* [javascript](https://www.graalvm.org/) (GraalVM JS)
+* [groovy](http://groovy-lang.org/)
+* [feel](https://github.com/camunda/feel-scala)
+
+_This is a community project meant for playing around with Zeebe. It is not officially supported by the Zeebe Team (i.e. no gurantees). Everybody is invited to contribute!_
 A Zeebe worker to evaluate scripts (i.e. script tasks). Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
 
 ## Usage
