@@ -15,36 +15,31 @@
  */
 package io.zeebe.script;
 
-import io.zeebe.client.ZeebeClient;
-import java.time.Duration;
-import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@SpringBootApplication
 public class ZeebeScriptWorkerApplication {
 
-  @Value("${zeebe.client.broker.contactPoint:127.0.0.1:26500}")
-  private String contactPoint;
+  public static final String ENV_CONTACT_POINT = "zeebe.client.broker.contactPoint";
+  private static final String DEFAULT_CONTACT_POINT = "127.0.0.1:26500";
 
-  @Autowired private ScriptJobHandler jobHandler;
+  private static Logger LOG = LoggerFactory.getLogger("zeebe-script-worker");
 
   public static void main(String[] args) {
-    SpringApplication.run(ZeebeScriptWorkerApplication.class, args);
-  }
 
-  @PostConstruct
-  public void start() {
+    final String contactPoint =
+        Optional.ofNullable(System.getenv(ENV_CONTACT_POINT)).orElse(DEFAULT_CONTACT_POINT);
 
-    final ZeebeClient client =
-        ZeebeClient.newClientBuilder()
-            .brokerContactPoint(contactPoint)
-            .defaultJobWorkerName("script-worker")
-            .defaultJobTimeout(Duration.ofSeconds(10))
-            .build();
+    LOG.info("Connecting worker to {}", contactPoint);
 
-    client.jobClient().newWorker().jobType("script").handler(jobHandler).open();
+    final ZeebeScriptWorker worker = new ZeebeScriptWorker(contactPoint);
+    worker.start();
+
+    try {
+      new CountDownLatch(1).await();
+    } catch (InterruptedException e) {
+    }
   }
 }

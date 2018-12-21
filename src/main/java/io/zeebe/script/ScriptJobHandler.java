@@ -15,24 +15,28 @@
  */
 package io.zeebe.script;
 
+import io.zeebe.client.ZeebeClient;
 import io.zeebe.client.api.clients.JobClient;
 import io.zeebe.client.api.response.ActivatedJob;
 import io.zeebe.client.api.subscription.JobHandler;
 import java.util.Collections;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ScriptJobHandler implements JobHandler {
 
   private static final String HEADER_LANGUAGE = "language";
   private static final String HEADER_SCRIPT = "script";
 
-  @Autowired private ScriptEvaluator scriptEvaluator;
+  private final ScriptEvaluator scriptEvaluator = new ScriptEvaluator();
+
+  private final ZeebeClient zeebeClient;
+
+  public ScriptJobHandler(ZeebeClient zeebeClient) {
+    this.zeebeClient = zeebeClient;
+  }
 
   @Override
-  public void handle(JobClient client, ActivatedJob job) {
+  public void handle(JobClient jobClient, ActivatedJob job) {
 
     final Map<String, Object> customHeaders = job.getCustomHeaders();
     final String language = getLanguage(customHeaders);
@@ -40,9 +44,13 @@ public class ScriptJobHandler implements JobHandler {
 
     final Map<String, Object> payload = job.getPayloadAsMap();
 
+    // add context
+    payload.put("job", job);
+    payload.put("zeebeClient", zeebeClient);
+
     final Object result = scriptEvaluator.evaluate(language, script, payload);
 
-    client
+    jobClient
         .newCompleteCommand(job.getKey())
         .payload(Collections.singletonMap("result", result))
         .send();
@@ -52,7 +60,7 @@ public class ScriptJobHandler implements JobHandler {
     final Object language = customHeaders.get(HEADER_LANGUAGE);
     if (language == null) {
       throw new RuntimeException(
-          String.format("Missing required custom header '%'", HEADER_LANGUAGE));
+          String.format("Missing required custom header '%s'", HEADER_LANGUAGE));
     } else {
       return String.valueOf(language);
     }
@@ -62,7 +70,7 @@ public class ScriptJobHandler implements JobHandler {
     final Object script = customHeaders.get(HEADER_SCRIPT);
     if (script == null) {
       throw new RuntimeException(
-          String.format("Missing required custom header '%'", HEADER_SCRIPT));
+          String.format("Missing required custom header '%s'", HEADER_SCRIPT));
     } else {
       return String.valueOf(script);
     }

@@ -1,19 +1,20 @@
 # zeebe-script-worker
 
-This is a Zeebe worker to evaluate scripts. Scripts are useful to create/modify the payload, to do (simple) calculations or for prototyping.
+A Zeebe worker to evaluate scripts. Scripts are useful to create/modify the payload, to do (simple) calculations or for prototyping.
 
 * the worker is registered for the type `script`
 * required custom headers:
   * `language` (String) - the name of the script language
   * `script` (String) - the script to evaluate
 * output payload contains `result` - the result of the evaluation   
+* available context in script:
+  * `job` (ActivatedJob) - the current job
+  * `zeebeClient` (ZeebeClient) - the client of the worker
 
 Available script languages:
 * javascript (Oracle Nashorn)
 * [groovy](http://groovy-lang.org/)
 * [feel](https://github.com/camunda/feel-scala)
-
-_This is a community project meant for playing around with Zeebe. It is not officially supported by the Zeebe Team (i.e. no gurantees). Everybody is invited to contribute!_
 
 ## Usage
 
@@ -55,11 +56,9 @@ Execute the JAR file via
 
 ## How to configure
 
-The worker can be configured via environment variables or a properties file `application.properties`.
+You can set the following environment variables to configure the worker.
 
-```
-zeebe.client.broker.contactPoint=127.0.0.1:26500
-```
+* `zeebe.client.broker.contactPoint`- default: `127.0.0.1:26500`
 
 ## Examples
 Some examples for common use cases:

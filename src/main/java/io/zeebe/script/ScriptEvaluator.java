@@ -22,9 +22,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ScriptEvaluator {
 
   private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
