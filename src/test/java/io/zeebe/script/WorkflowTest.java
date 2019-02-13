@@ -83,7 +83,7 @@ public class WorkflowTest {
                 "task", t -> t.zeebeTaskType("script").zeebeTaskHeader("language", "groovy"))
             .zeebeTaskHeader(
                 "script",
-                "zeebeClient.workflowClient().newPublishMessageCommand().messageName('foo').correlationKey('bar').send().join()")
+                "zeebeClient.newPublishMessageCommand().messageName('foo').correlationKey('bar').send().join()")
             .done();
 
     final WorkflowInstanceEvent workflowInstance =
@@ -100,7 +100,6 @@ public class WorkflowTest {
   private WorkflowInstanceEvent deployAndCreateInstance(
       final BpmnModelInstance workflow, Map<String, Object> payload) {
     client
-        .workflowClient()
         .newDeployCommand()
         .addWorkflowModel(workflow, "process.bpmn")
         .send()
@@ -108,7 +107,6 @@ public class WorkflowTest {
 
     final WorkflowInstanceEvent workflowInstance =
         client
-            .workflowClient()
             .newCreateInstanceCommand()
             .bpmnProcessId("process")
             .latestVersion()

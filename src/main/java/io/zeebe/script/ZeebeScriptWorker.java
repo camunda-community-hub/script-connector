@@ -38,7 +38,7 @@ public class ZeebeScriptWorker {
             .build();
 
     final ScriptJobHandler jobHandler = new ScriptJobHandler(client);
-    jobWorker = client.jobClient().newWorker().jobType("script").handler(jobHandler).open();
+    jobWorker = client.newWorker().jobType("script").handler(jobHandler).open();
   }
 
   public void stop() {
