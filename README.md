@@ -1,15 +1,15 @@
 # zeebe-script-worker
 
-A Zeebe worker to evaluate scripts. Scripts are useful to create/modify the payload, to do (simple) calculations or for prototyping.
+A Zeebe worker to evaluate scripts. Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
 
 * the worker is registered for the type `script`
 * required custom headers:
   * `language` (String) - the name of the script language
   * `script` (String) - the script to evaluate
-* output payload contains `result` - the result of the evaluation   
-* available context in script:
+* available context/variables in script:
   * `job` (ActivatedJob) - the current job
   * `zeebeClient` (ZeebeClient) - the client of the worker
+* the result of the evaluation is passed as `result` variable   
 
 Available script languages:
 * javascript (Oracle Nashorn)
@@ -18,7 +18,8 @@ Available script languages:
 
 ## Usage
 
-The service task:
+Example BPMN with service task:
+
 ```xml
 <bpmn:serviceTask id="scripting" name="Evaluate the Script">
   <bpmn:extensionElements>
@@ -31,102 +32,20 @@ The service task:
 </bpmn:serviceTask>
 ```
 
-The job's payload:
-```json
-{ "a": 2,
-  "b": 3 }
-```
+## Install
 
-The job's result payload:
-```json
-{ "result": 5 }
-```
+1) Download the JAR file 
 
-## How to build
+    or build it from source using Maven:
+    `mvn clean install`
 
-Build with Maven
+2) Execute the JAR via
 
-`mvn clean install`
+    `java -jar target/zeebe-script-worker-{VERSION}.jar`
 
-## How to run
+### Configuration
 
-Execute the JAR file via
-
-`java -jar target/zeebe-script-worker-{VERSION}.jar`
-
-## How to configure
-
-You can set the following environment variables to configure the worker.
-
-* `zeebe.client.broker.contactPoint`- default: `127.0.0.1:26500`
-
-## Examples
-Some examples for common use cases:
-
-### Single Value
-
-JavaScript:
-```javascript
-'url?id=' + id
-```
-
-Result:
-```json
-{"result": "url?id=123"}
-```
-
-### Complex Value
-
-JavaScript:
-```javascript
-result = {};
-result.orderId = id;
-result.price = price * 1.20;
-result;
-```
-Groovy:
-```groovy
-[orderId:id,
- price:price * 1.20 ]
-```
-
-FEEL:
-```
-{orderId:id,
- price:price * 1.20 }
-```
-
-Result:
-```json
-{"result": {
- "orderId": 123,
- "price": 120.0 }}
-```
-
-### Aggregation
-
-Jobs' payload:
-```json
-{"order": {
- "id": 123,
- "items": [
-  {"id":"i1", "price":5.99},
-  {"id":"i2", "price":29.99},
-  {"id":"i3", "price":10.00}
- ]}}
-```
-
-FEEL:
-```
-sum(order.items.price)                                    
-// result: 45.98
-
-some item in order.items satisfies item.price > 20.00     
-// result: true
-
-order.items[price >= 10.00]                               
-// result: [{"id":"i2", "price":29.99}, {"id":"i3", "price":10.00}]
-```
+The connection can be changed by setting the environment variables `zeebe.client.broker.contactPoint` (default: `127.0.0.1:26500`).
 
 ## Code of Conduct
 
