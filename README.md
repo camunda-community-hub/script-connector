@@ -42,7 +42,8 @@ Example BPMN with service task:
 
 ### Configuration
 
-The connection can be changed by setting the environment variables `zeebe.client.broker.contactPoint` (default: `127.0.0.1:26500`).
+The connection can be changed by setting the environment variables:
+* `zeebe.client.broker.contactPoint` (default: `127.0.0.1:26500`).
 
 ## Build from Source
 
