@@ -4,8 +4,8 @@ A Zeebe worker to evaluate scripts (i.e. script tasks). Scripts are useful for p
 
 * the worker is registered for the type `script`
 * required custom headers:
-  * `language` (String) - the name of the script language
-  * `script` (String) - the script to evaluate
+  * `language` - the name of the script language
+  * `script` - the script to evaluate
 * available context/variables in script:
   * `job` (ActivatedJob) - the current job
   * `zeebeClient` (ZeebeClient) - the client of the worker
