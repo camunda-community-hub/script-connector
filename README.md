@@ -2,20 +2,6 @@
 
 A Zeebe worker to evaluate scripts (i.e. script tasks). Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
 
-* the worker is registered for the type `script`
-* required custom headers:
-  * `language` - the name of the script language
-  * `script` - the script to evaluate
-* available context/variables in script:
-  * `job` (ActivatedJob) - the current job
-  * `zeebeClient` (ZeebeClient) - the client of the worker
-* the result of the evaluation is passed as `result` variable   
-
-Available script languages:
-* javascript (Oracle Nashorn)
-* [groovy](http://groovy-lang.org/)
-* [feel](https://github.com/camunda/feel-scala)
-
 ## Usage
 
 Example BPMN with service task:
@@ -31,6 +17,20 @@ Example BPMN with service task:
   </bpmn:extensionElements>
 </bpmn:serviceTask>
 ```
+
+* the worker is registered for the type `script`
+* required custom headers:
+  * `language` - the name of the script language
+  * `script` - the script to evaluate
+* available context/variables in script:
+  * `job` (ActivatedJob) - the current job
+  * `zeebeClient` (ZeebeClient) - the client of the worker
+* the result of the evaluation is passed as `result` variable   
+
+Available script languages:
+* javascript (Oracle Nashorn)
+* [groovy](http://groovy-lang.org/)
+* [feel](https://github.com/camunda/feel-scala)
 
 ## Install
 
