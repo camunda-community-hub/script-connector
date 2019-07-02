@@ -16,7 +16,8 @@
 package io.zeebe.script;
 
 import io.zeebe.client.ZeebeClient;
-import io.zeebe.client.api.subscription.JobWorker;
+import io.zeebe.client.api.worker.JobWorker;
+
 import java.time.Duration;
 
 public class ZeebeScriptWorker {

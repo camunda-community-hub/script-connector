@@ -43,7 +43,7 @@ public class ScriptEvaluatorTest {
   public void shouldEvaluateFeel() {
     final Object result = scriptEvaluator.evaluate("feel", "123", Collections.emptyMap());
 
-    assertThat(result).isEqualTo(123);
+    assertThat(result).isEqualTo(123L);
   }
 
   @Test
@@ -69,7 +69,7 @@ public class ScriptEvaluatorTest {
 
     final Object result = scriptEvaluator.evaluate("feel", "a", Collections.singletonMap("a", 123));
 
-    assertThat(result).isEqualTo(123);
+    assertThat(result).isEqualTo(123L);
   }
 
   @Test

@@ -1,1 +1,1 @@
-io.zeebe.script.feel.FeelValueMapper
+org.camunda.feel.spi.JavaValueMapper

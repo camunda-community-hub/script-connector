@@ -35,7 +35,7 @@ public class EvaluationFeelTest {
     final Object result =
         scriptEvaluator.evaluate("feel", "x * 2", Collections.singletonMap("x", 2));
 
-    assertThat(result).isEqualTo(4);
+    assertThat(result).isEqualTo(4L);
   }
 
   @Test
@@ -54,7 +54,7 @@ public class EvaluationFeelTest {
         (List<Object>)
             scriptEvaluator.evaluate("feel", "[1,2,3]", Collections.singletonMap("x", 3));
 
-    assertThat(result).hasSize(3).contains(1, 2, 3);
+    assertThat(result).hasSize(3).contains(1L, 2L, 3L);
   }
 
   @Test
@@ -65,7 +65,7 @@ public class EvaluationFeelTest {
             scriptEvaluator.evaluate(
                 "feel", "{foo:foo,bar:\"bar\"}", Collections.singletonMap("foo", 123));
 
-    assertThat(result).hasSize(2).contains(entry("foo", 123), entry("bar", "bar"));
+    assertThat(result).hasSize(2).contains(entry("foo", 123L), entry("bar", "bar"));
   }
 
   @Test
@@ -75,6 +75,6 @@ public class EvaluationFeelTest {
         scriptEvaluator.evaluate(
             "feel", "sum(items)", Collections.singletonMap("items", Arrays.asList(1, 2, 3)));
 
-    assertThat(result).isEqualTo(6);
+    assertThat(result).isEqualTo(6L);
   }
 }

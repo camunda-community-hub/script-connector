@@ -3,11 +3,11 @@ package io.zeebe.script;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.zeebe.client.ZeebeClient;
-import io.zeebe.client.api.events.WorkflowInstanceEvent;
-import io.zeebe.exporter.record.value.MessageRecordValue;
+import io.zeebe.client.api.response.WorkflowInstanceEvent;
 import io.zeebe.model.bpmn.Bpmn;
 import io.zeebe.model.bpmn.BpmnModelInstance;
-import io.zeebe.protocol.intent.MessageIntent;
+import io.zeebe.protocol.record.intent.MessageIntent;
+import io.zeebe.protocol.record.value.MessageRecordValue;
 import io.zeebe.test.ZeebeTestRule;
 import io.zeebe.test.util.record.RecordingExporter;
 import java.util.Collections;
@@ -51,7 +51,7 @@ public class WorkflowTest {
     final WorkflowInstanceEvent workflowInstance =
         deployAndCreateInstance(workflow, Collections.singletonMap("x", 2));
 
-    ZeebeTestRule.assertThat(workflowInstance).isEnded().hasElementPayload("task", "result", 3);
+    ZeebeTestRule.assertThat(workflowInstance).isEnded().hasVariables("result", 3);
   }
 
   @Test
@@ -62,7 +62,7 @@ public class WorkflowTest {
             .startEvent()
             .serviceTask(
                 "task", t -> t.zeebeTaskType("script").zeebeTaskHeader("language", "groovy"))
-            .zeebeTaskHeader("script", "job.headers.workflowInstanceKey")
+            .zeebeTaskHeader("script", "job.workflowInstanceKey")
             .done();
 
     final WorkflowInstanceEvent workflowInstance =
@@ -70,7 +70,7 @@ public class WorkflowTest {
 
     ZeebeTestRule.assertThat(workflowInstance)
         .isEnded()
-        .hasElementPayload("task", "result", (int) workflowInstance.getWorkflowInstanceKey());
+        .hasVariables("result", workflowInstance.getWorkflowInstanceKey());
   }
 
   @Test
@@ -98,19 +98,15 @@ public class WorkflowTest {
   }
 
   private WorkflowInstanceEvent deployAndCreateInstance(
-      final BpmnModelInstance workflow, Map<String, Object> payload) {
-    client
-        .newDeployCommand()
-        .addWorkflowModel(workflow, "process.bpmn")
-        .send()
-        .join();
+      final BpmnModelInstance workflow, Map<String, Object> variables) {
+    client.newDeployCommand().addWorkflowModel(workflow, "process.bpmn").send().join();
 
     final WorkflowInstanceEvent workflowInstance =
         client
             .newCreateInstanceCommand()
             .bpmnProcessId("process")
             .latestVersion()
-            .payload(payload)
+            .variables(variables)
             .send()
             .join();
     return workflowInstance;

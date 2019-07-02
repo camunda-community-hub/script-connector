@@ -16,11 +16,13 @@
 package io.zeebe.script;
 
 import io.zeebe.client.ZeebeClient;
-import io.zeebe.client.api.clients.JobClient;
 import io.zeebe.client.api.response.ActivatedJob;
-import io.zeebe.client.api.subscription.JobHandler;
+import io.zeebe.client.api.worker.JobClient;
+import io.zeebe.client.api.worker.JobHandler;
+
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 public class ScriptJobHandler implements JobHandler {
 
@@ -38,41 +40,37 @@ public class ScriptJobHandler implements JobHandler {
   @Override
   public void handle(JobClient jobClient, ActivatedJob job) {
 
-    final Map<String, Object> customHeaders = job.getCustomHeaders();
+    final Map<String, String> customHeaders = job.getCustomHeaders();
     final String language = getLanguage(customHeaders);
     final String script = getScript(customHeaders);
 
-    final Map<String, Object> payload = job.getPayloadAsMap();
+    final Map<String, Object> variables = job.getVariablesAsMap();
 
     // add context
-    payload.put("job", job);
-    payload.put("zeebeClient", zeebeClient);
+    variables.put("job", job);
+    variables.put("zeebeClient", zeebeClient);
 
-    final Object result = scriptEvaluator.evaluate(language, script, payload);
+    final Object result = scriptEvaluator.evaluate(language, script, variables);
 
     jobClient
         .newCompleteCommand(job.getKey())
-        .payload(Collections.singletonMap("result", result))
+        .variables(Collections.singletonMap("result", result))
         .send();
   }
 
-  private String getLanguage(Map<String, Object> customHeaders) {
-    final Object language = customHeaders.get(HEADER_LANGUAGE);
-    if (language == null) {
-      throw new RuntimeException(
-          String.format("Missing required custom header '%s'", HEADER_LANGUAGE));
-    } else {
-      return String.valueOf(language);
-    }
+  private String getLanguage(Map<String, String> customHeaders) {
+    return Optional.ofNullable(customHeaders.get(HEADER_LANGUAGE))
+        .orElseThrow(
+            () ->
+                new RuntimeException(
+                    String.format("Missing required custom header '%s'", HEADER_LANGUAGE)));
   }
 
-  private String getScript(Map<String, Object> customHeaders) {
-    final Object script = customHeaders.get(HEADER_SCRIPT);
-    if (script == null) {
-      throw new RuntimeException(
-          String.format("Missing required custom header '%s'", HEADER_SCRIPT));
-    } else {
-      return String.valueOf(script);
-    }
+  private String getScript(Map<String, String> customHeaders) {
+    return Optional.ofNullable(customHeaders.get(HEADER_SCRIPT))
+        .orElseThrow(
+            () ->
+                new RuntimeException(
+                    String.format("Missing required custom header '%s'", HEADER_SCRIPT)));
   }
 }
