@@ -34,10 +34,7 @@ Example BPMN with service task:
 
 ## Install
 
-1) Download the JAR file 
-
-    or build it from source using Maven:
-    `mvn clean install`
+1) Download the [JAR file](https://github.com/zeebe-io/zeebe-script-worker/releases) 
 
 2) Execute the JAR via
 
@@ -46,6 +43,12 @@ Example BPMN with service task:
 ### Configuration
 
 The connection can be changed by setting the environment variables `zeebe.client.broker.contactPoint` (default: `127.0.0.1:26500`).
+
+## Build from Source
+
+Build with Maven:
+    
+`mvn clean install`
 
 ## Code of Conduct
 
