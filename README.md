@@ -1,6 +1,6 @@
 # zeebe-script-worker
 
-A Zeebe worker to evaluate scripts. Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
+A Zeebe worker to evaluate scripts (i.e. script tasks). Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
 
 * the worker is registered for the type `script`
 * required custom headers:
