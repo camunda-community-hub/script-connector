@@ -51,7 +51,7 @@ public class WorkflowTest {
     final WorkflowInstanceEvent workflowInstance =
         deployAndCreateInstance(workflow, Collections.singletonMap("x", 2));
 
-    ZeebeTestRule.assertThat(workflowInstance).isEnded().hasVariables("result", 3);
+    ZeebeTestRule.assertThat(workflowInstance).isEnded().hasVariable("result", 3);
   }
 
   @Test
@@ -70,7 +70,7 @@ public class WorkflowTest {
 
     ZeebeTestRule.assertThat(workflowInstance)
         .isEnded()
-        .hasVariables("result", workflowInstance.getWorkflowInstanceKey());
+        .hasVariable("result", workflowInstance.getWorkflowInstanceKey());
   }
 
   @Test
