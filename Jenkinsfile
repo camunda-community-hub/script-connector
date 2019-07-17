@@ -59,8 +59,6 @@ spec:
     stage('Prepare') {
       steps {
         container('maven') {
-            sh 'apt-get update'
-            sh 'apt-get install --no-install-recommends -qq -y libatomic1'
             sh 'mvn clean install -B -s .ci/settings.xml -DskipTests'
         }
       }
