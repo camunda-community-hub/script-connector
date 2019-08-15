@@ -10,13 +10,13 @@
 	<parent>
 		<groupId>org.camunda</groupId>
 		<artifactId>camunda-release-parent</artifactId>
-		<version>2.5</version>
+		<version>3.7</version>
 		<!-- do not remove empty tag - http://jira.codehaus.org/browse/MNG-4687 -->
 		<relativePath />
 	</parent>
 
 	<properties>
-		<version.zeebe>0.20.0</version.zeebe>
+		<version.zeebe>0.21.0-alpha1</version.zeebe>
 		<version.groovy>2.4.15</version.groovy>
 		<version.feel>1.8.0</version.feel>
 

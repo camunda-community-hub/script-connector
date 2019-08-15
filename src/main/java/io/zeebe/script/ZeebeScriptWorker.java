@@ -36,6 +36,7 @@ public class ZeebeScriptWorker {
             .brokerContactPoint(contactPoint)
             .defaultJobWorkerName("script-worker")
             .defaultJobTimeout(Duration.ofSeconds(10))
+            .usePlaintext()
             .build();
 
     final ScriptJobHandler jobHandler = new ScriptJobHandler(client);
