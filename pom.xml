@@ -16,12 +16,11 @@
 	</parent>
 
 	<properties>
-		<version.zeebe>0.21.0-alpha1</version.zeebe>
+		<version.zeebe>0.21.1</version.zeebe>
 		<version.groovy>2.4.15</version.groovy>
-		<version.feel>1.8.0</version.feel>
+		<version.feel>1.9.0</version.feel>
 
 		<!-- release parent settings -->
-		<version.java>1.8</version.java>
 		<nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</nexus.snapshot.repository>
 		<nexus.release.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io/</nexus.release.repository>
 
@@ -99,6 +98,14 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
