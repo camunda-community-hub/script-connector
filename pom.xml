@@ -19,7 +19,7 @@
 		<version.zeebe>0.21.1</version.zeebe>
 		<version.groovy>2.4.15</version.groovy>
 		<version.feel>1.9.0</version.feel>
-		<version.java>11</version.java>
+		<version.java>8</version.java>
 		<java.version>${version.java}</java.version>
 
 		<maven.compiler.source>${java.version}</maven.compiler.source>
@@ -106,10 +106,9 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
-					<release>11</release>
+					<source>${version.java}</source>
 				</configuration>
 			</plugin>
 			<plugin>
