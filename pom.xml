@@ -19,11 +19,17 @@
 		<version.zeebe>0.21.1</version.zeebe>
 		<version.groovy>2.4.15</version.groovy>
 		<version.feel>1.9.0</version.feel>
+		<version.java>11</version.java>
+		<java.version>${version.java}</java.version>
+
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 
 		<!-- release parent settings -->
 		<nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</nexus.snapshot.repository>
 		<nexus.release.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io/</nexus.release.repository>
 
+		<plugin.version.javadoc>3.1.1</plugin.version.javadoc>
 		<!-- disable jdk8 javadoc checks on release build -->
 		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
