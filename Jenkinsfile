@@ -1,9 +1,11 @@
+def buildName = "${env.JOB_BASE_NAME.replaceAll("%2F", "-").replaceAll("\\.", "-").take(20)}-${env.BUILD_ID}"
+
 pipeline {
 
   agent {
     kubernetes {
       cloud 'zeebe-ci'
-      label "zeebe-ci-build_${env.JOB_BASE_NAME}-${env.BUILD_ID}"
+      label "zeebe-ci-build_${buildName}"
       defaultContainer 'jnlp'
       yaml '''\
 apiVersion: v1
@@ -23,10 +25,6 @@ spec:
       image: maven:3.6.0-jdk-11
       command: ["cat"]
       tty: true
-      env:
-        - name: JAVA_TOOL_OPTIONS
-          value: |
-            -XX:+UnlockExperimentalVMOptions
       resources:
         limits:
           cpu: 1
@@ -59,6 +57,8 @@ spec:
       steps {
         container('maven') {
           configFileProvider([configFile(fileId: 'maven-nexus-settings-zeebe', variable: 'MAVEN_SETTINGS_XML')]) {
+            sh 'apt-get update'
+            sh 'apt-get install --no-install-recommends -qq -y libatomic1'
             sh 'mvn clean install -B -s $MAVEN_SETTINGS_XML -DskipTests'
           }
         }
