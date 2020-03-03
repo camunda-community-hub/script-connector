@@ -17,7 +17,7 @@
 
 	<properties>
 		<version.zeebe>0.22.1</version.zeebe>
-		<version.groovy>2.4.18</version.groovy>
+		<version.groovy>2.4.19</version.groovy>
 		<version.feel>1.10.1</version.feel>
 		<version.java>8</version.java>
 		<java.version>${version.java}</java.version>
