@@ -17,6 +17,8 @@
 
 	<properties>
 		<version.zeebe>0.22.2</version.zeebe>
+		<version.zeebe.spring>0.22.0</version.zeebe.spring>
+		<version.spring.boot>2.2.5.RELEASE</version.spring.boot>
 		<version.groovy>2.4.19</version.groovy>
 		<version.feel>1.10.1</version.feel>
 		<version.java>8</version.java>
@@ -43,14 +45,45 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${version.spring.boot}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>io.zeebe</groupId>
-			<artifactId>zeebe-client-java</artifactId>
+			<groupId>io.zeebe.spring</groupId>
+			<artifactId>spring-zeebe-starter</artifactId>
+			<version>${version.zeebe.spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- script languages -->
@@ -112,44 +145,13 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>io.zeebe.script.ZeebeScriptWorkerApplication</mainClass>
-						</manifest>
-					</archive>
-					<finalName>${project.artifactId}-${project.version}</finalName>
-					<appendAssemblyId>false</appendAssemblyId>
-				</configuration>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
 						<goals>
-							<goal>single</goal>
+							<goal>repackage</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.2</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-							</transformers>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
