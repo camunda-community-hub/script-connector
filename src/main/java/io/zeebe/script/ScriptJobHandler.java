@@ -19,11 +19,15 @@ import io.zeebe.client.ZeebeClient;
 import io.zeebe.client.api.response.ActivatedJob;
 import io.zeebe.client.api.worker.JobClient;
 import io.zeebe.client.api.worker.JobHandler;
+import io.zeebe.spring.client.annotation.ZeebeWorker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
+@Component
 public class ScriptJobHandler implements JobHandler {
 
   private static final String HEADER_LANGUAGE = "language";
@@ -33,11 +37,13 @@ public class ScriptJobHandler implements JobHandler {
 
   private final ZeebeClient zeebeClient;
 
+  @Autowired
   public ScriptJobHandler(ZeebeClient zeebeClient) {
     this.zeebeClient = zeebeClient;
   }
 
   @Override
+  @ZeebeWorker
   public void handle(JobClient jobClient, ActivatedJob job) {
 
     final Map<String, String> customHeaders = job.getCustomHeaders();

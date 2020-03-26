@@ -15,31 +15,15 @@
  */
 package io.zeebe.script;
 
-import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.zeebe.spring.client.EnableZeebeClient;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
+@EnableZeebeClient
 public class ZeebeScriptWorkerApplication {
 
-  public static final String ENV_CONTACT_POINT = "zeebe.client.broker.contactPoint";
-  private static final String DEFAULT_CONTACT_POINT = "127.0.0.1:26500";
-
-  private static Logger LOG = LoggerFactory.getLogger("zeebe-script-worker");
-
   public static void main(String[] args) {
-
-    final String contactPoint =
-        Optional.ofNullable(System.getenv(ENV_CONTACT_POINT)).orElse(DEFAULT_CONTACT_POINT);
-
-    LOG.info("Connecting worker to {}", contactPoint);
-
-    final ZeebeScriptWorker worker = new ZeebeScriptWorker(contactPoint);
-    worker.start();
-
-    try {
-      new CountDownLatch(1).await();
-    } catch (InterruptedException e) {
-    }
+    SpringApplication.run(ZeebeScriptWorkerApplication.class, args);
   }
 }
