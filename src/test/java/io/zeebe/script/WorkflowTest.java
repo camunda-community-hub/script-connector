@@ -1,7 +1,5 @@
 package io.zeebe.script;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import io.zeebe.client.ZeebeClient;
 import io.zeebe.client.api.response.WorkflowInstanceEvent;
 import io.zeebe.model.bpmn.Bpmn;
@@ -10,12 +8,15 @@ import io.zeebe.protocol.record.intent.MessageIntent;
 import io.zeebe.protocol.record.value.MessageRecordValue;
 import io.zeebe.test.ZeebeTestRule;
 import io.zeebe.test.util.record.RecordingExporter;
-import java.util.Collections;
-import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Collections;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WorkflowTest {
 
@@ -44,8 +45,11 @@ public class WorkflowTest {
         Bpmn.createExecutableProcess("process")
             .startEvent()
             .serviceTask(
-                "task", t -> t.zeebeTaskType("script").zeebeTaskHeader("language", "groovy"))
-            .zeebeTaskHeader("script", "x + 1")
+                "task",
+                t ->
+                    t.zeebeJobType("script")
+                        .zeebeTaskHeader("language", "groovy")
+                        .zeebeTaskHeader("script", "x + 1"))
             .done();
 
     final WorkflowInstanceEvent workflowInstance =
@@ -61,8 +65,11 @@ public class WorkflowTest {
         Bpmn.createExecutableProcess("process")
             .startEvent()
             .serviceTask(
-                "task", t -> t.zeebeTaskType("script").zeebeTaskHeader("language", "groovy"))
-            .zeebeTaskHeader("script", "job.workflowInstanceKey")
+                "task",
+                t ->
+                    t.zeebeJobType("script")
+                        .zeebeTaskHeader("language", "groovy")
+                        .zeebeTaskHeader("script", "job.workflowInstanceKey"))
             .done();
 
     final WorkflowInstanceEvent workflowInstance =
@@ -80,10 +87,13 @@ public class WorkflowTest {
         Bpmn.createExecutableProcess("process")
             .startEvent()
             .serviceTask(
-                "task", t -> t.zeebeTaskType("script").zeebeTaskHeader("language", "groovy"))
-            .zeebeTaskHeader(
-                "script",
-                "zeebeClient.newPublishMessageCommand().messageName('foo').correlationKey('bar').send().join()")
+                "task",
+                t ->
+                    t.zeebeJobType("script")
+                        .zeebeTaskHeader("language", "groovy")
+                        .zeebeTaskHeader(
+                            "script",
+                            "zeebeClient.newPublishMessageCommand().messageName('foo').correlationKey('bar').send().join()"))
             .done();
 
     final WorkflowInstanceEvent workflowInstance =
