@@ -1,164 +1,154 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <name>Zeebe Script Worker</name>
-    <groupId>io.zeebe</groupId>
-    <artifactId>zeebe-script-worker</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+	<modelVersion>4.0.0</modelVersion>
+	<name>Zeebe Script Worker</name>
+	<groupId>io.zeebe</groupId>
+	<artifactId>zeebe-script-worker</artifactId>
+	<version>0.7.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-    <parent>
-        <groupId>org.camunda</groupId>
-        <artifactId>camunda-release-parent</artifactId>
-        <version>3.7</version>
-        <!-- do not remove empty tag - http://jira.codehaus.org/browse/MNG-4687 -->
-        <relativePath/>
-    </parent>
+	<parent>
+		<groupId>org.camunda</groupId>
+		<artifactId>camunda-release-parent</artifactId>
+		<version>3.7</version>
+		<!-- do not remove empty tag - http://jira.codehaus.org/browse/MNG-4687 -->
+		<relativePath />
+	</parent>
 
-    <properties>
-        <version.zeebe>0.23.0</version.zeebe>
-        <version.groovy>2.4.19</version.groovy>
-        <version.feel>1.11.0</version.feel>
-        <version.java>8</version.java>
-        <java.version>${version.java}</java.version>
+	<properties>
+		<version.zeebe>0.23.0</version.zeebe>
+		<version.zeebe.spring>0.22.0</version.zeebe.spring>
 
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+		<version.groovy>2.4.19</version.groovy>
+		<version.feel>1.11.0</version.feel>
 
-        <!-- release parent settings -->
-        <nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/
-        </nexus.snapshot.repository>
-        <nexus.release.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io/
-        </nexus.release.repository>
+		<version.spring.boot>2.2.6.RELEASE</version.spring.boot>
+		<version.java>8</version.java>
+		<java.version>${version.java}</java.version>
 
-        <plugin.version.javadoc>3.1.1</plugin.version.javadoc>
-        <!-- disable jdk8 javadoc checks on release build -->
-        <additionalparam>-Xdoclint:none</additionalparam>
-    </properties>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.zeebe</groupId>
-                <artifactId>zeebe-bom</artifactId>
-                <version>${version.zeebe}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+		<!-- release parent settings -->
+		<nexus.snapshot.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</nexus.snapshot.repository>
+		<nexus.release.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io/</nexus.release.repository>
 
-    <dependencies>
+		<plugin.version.javadoc>3.1.1</plugin.version.javadoc>
+		<!-- disable jdk8 javadoc checks on release build -->
+		<additionalparam>-Xdoclint:none</additionalparam>
+	</properties>
 
-        <dependency>
-            <groupId>io.zeebe</groupId>
-            <artifactId>zeebe-client-java</artifactId>
-        </dependency>
+	<dependencyManagement>
+		<dependencies>
 
-        <!-- script languages -->
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${version.groovy}</version>
-        </dependency>
+			<dependency>
+				<groupId>io.zeebe</groupId>
+				<artifactId>zeebe-bom</artifactId>
+				<version>${version.zeebe}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
 
-        <dependency>
-            <groupId>org.camunda.feel</groupId>
-            <artifactId>feel-engine</artifactId>
-            <version>${version.feel}</version>
-        </dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${version.spring.boot}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
-        <!-- logging -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.13.1</version>
-        </dependency>
+		</dependencies>
+	</dependencyManagement>
 
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.13.1</version>
-        </dependency>
+	<dependencies>
 
-        <!-- test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-            <version>4.13</version>
-        </dependency>
+		<!-- spring deps-->
+		<dependency>
+			<groupId>io.zeebe.spring</groupId>
+			<artifactId>spring-zeebe-starter</artifactId>
+			<version>${version.zeebe.spring}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.15.0</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>io.zeebe</groupId>
-            <artifactId>zeebe-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <source>${version.java}</source>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>io.zeebe.script.ZeebeScriptWorkerApplication</mainClass>
-                        </manifest>
-                    </archive>
-                    <finalName>${project.artifactId}-${project.version}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.2</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+		<!-- script languages -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>${version.groovy}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.camunda.feel</groupId>
+			<artifactId>feel-engine</artifactId>
+			<version>${version.feel}</version>
+		</dependency>
+
+		<!-- test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<version>4.13</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.15.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.zeebe</groupId>
+			<artifactId>zeebe-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>${version.java}</source>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
     <profiles>
         <profile>
@@ -191,37 +181,37 @@
         </profile>
     </profiles>
 
-    <repositories>
-        <repository>
-            <id>zeebe</id>
-            <name>Zeebe Repository</name>
-            <url>https://app.camunda.com/nexus/content/repositories/zeebe-io/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
+	<repositories>
+		<repository>
+			<id>zeebe</id>
+			<name>Zeebe Repository</name>
+			<url>https://app.camunda.com/nexus/content/repositories/zeebe-io/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 
-        <repository>
-            <id>zeebe-snapshots</id>
-            <name>Zeebe Snapshot Repository</name>
-            <url>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+		<repository>
+			<id>zeebe-snapshots</id>
+			<name>Zeebe Snapshot Repository</name>
+			<url>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
-    <scm>
-        <url>https://github.com/zeebe-io/zeebe-script-worker</url>
-        <connection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</connection>
-        <developerConnection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+	<scm>
+		<url>https://github.com/zeebe-io/zeebe-script-worker</url>
+		<connection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</connection>
+		<developerConnection>scm:git:git@github.com:zeebe-io/zeebe-script-worker.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
 </project>

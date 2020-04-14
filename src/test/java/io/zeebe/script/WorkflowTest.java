@@ -1,6 +1,5 @@
 package io.zeebe.script;
 
-import io.zeebe.client.ZeebeClient;
 import io.zeebe.client.api.response.WorkflowInstanceEvent;
 import io.zeebe.model.bpmn.Bpmn;
 import io.zeebe.model.bpmn.BpmnModelInstance;
@@ -8,34 +7,29 @@ import io.zeebe.protocol.record.intent.MessageIntent;
 import io.zeebe.protocol.record.value.MessageRecordValue;
 import io.zeebe.test.ZeebeTestRule;
 import io.zeebe.test.util.record.RecordingExporter;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class WorkflowTest {
 
-  @Rule public final ZeebeTestRule testRule = new ZeebeTestRule();
+  @ClassRule public static final ZeebeTestRule TEST_RULE = new ZeebeTestRule();
 
-  private ZeebeClient client;
-  private ZeebeScriptWorker worker;
-
-  @Before
-  public void init() {
-    client = testRule.getClient();
-
-    worker = new ZeebeScriptWorker(client.getConfiguration().getBrokerContactPoint());
-    worker.start();
-  }
-
-  @After
-  public void cleanUp() {
-    worker.stop();
+  @BeforeClass
+  public static void init() {
+    System.setProperty(
+        "zeebe.client.broker.contactPoint",
+        TEST_RULE.getClient().getConfiguration().getBrokerContactPoint());
   }
 
   @Test
@@ -109,10 +103,16 @@ public class WorkflowTest {
 
   private WorkflowInstanceEvent deployAndCreateInstance(
       final BpmnModelInstance workflow, Map<String, Object> variables) {
-    client.newDeployCommand().addWorkflowModel(workflow, "process.bpmn").send().join();
+    TEST_RULE
+        .getClient()
+        .newDeployCommand()
+        .addWorkflowModel(workflow, "process.bpmn")
+        .send()
+        .join();
 
     final WorkflowInstanceEvent workflowInstance =
-        client
+        TEST_RULE
+            .getClient()
             .newCreateInstanceCommand()
             .bpmnProcessId("process")
             .latestVersion()
