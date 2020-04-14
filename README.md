@@ -31,6 +31,7 @@ Available script languages:
 * javascript (Oracle Nashorn)
 * [groovy](http://groovy-lang.org/)
 * [feel](https://github.com/camunda/feel-scala)
+* [mustache](http://mustache.github.io/mustache.5.html)
 
 ## Install
 
