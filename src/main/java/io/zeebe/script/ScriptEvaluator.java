@@ -15,22 +15,35 @@
  */
 package io.zeebe.script;
 
-import java.util.HashMap;
-import java.util.Map;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScriptEvaluator {
 
   private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
+  private final Map<String, ZeebeScriptEvaluator> additionalEvaluators =
+      Map.of("mustache", new MustacheEvaluator());
+
   private final Map<String, ScriptEngine> cachedScriptEngines = new HashMap<>();
 
   public Object evaluate(String language, String script, Map<String, Object> variables) {
 
+    if (additionalEvaluators.containsKey(language)) {
+      final var scriptEvaluator = additionalEvaluators.get(language);
+      return scriptEvaluator.eval(script, variables);
+    }
+
+    return evalWithScriptEngine(language, script, variables);
+  }
+
+  private Object evalWithScriptEngine(
+      String language, String script, Map<String, Object> variables) {
     final ScriptEngine scriptEngine =
         cachedScriptEngines.computeIfAbsent(language, scriptEngineManager::getEngineByName);
 
@@ -39,17 +52,22 @@ public class ScriptEvaluator {
       throw new RuntimeException(msg);
     }
 
-    final ScriptContext context = scriptEngine.getContext();
-    final Bindings bindings = context.getBindings(ScriptContext.ENGINE_SCOPE);
-    bindings.putAll(variables);
-
     try {
-
-      return scriptEngine.eval(script, context);
+      return eval(scriptEngine, script, variables);
 
     } catch (ScriptException e) {
       final String msg = String.format("Failed to evaluate script '%s' (%s)", script, language);
       throw new RuntimeException(msg, e);
     }
+  }
+
+  private Object eval(ScriptEngine scriptEngine, String script, Map<String, Object> variables)
+      throws ScriptException {
+
+    final ScriptContext context = scriptEngine.getContext();
+    final Bindings bindings = context.getBindings(ScriptContext.ENGINE_SCOPE);
+    bindings.putAll(variables);
+
+    return scriptEngine.eval(script, context);
   }
 }
