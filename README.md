@@ -35,21 +35,53 @@ Available script languages:
 
 ## Install
 
-1) Download the [JAR file](https://github.com/zeebe-io/zeebe-script-worker/releases) 
+### Docker
 
-2) Execute the JAR via
+The docker image for the worker is published to [DockerHub](https://hub.docker.com/r/camunda/zeebe-script-worker).
 
-    `java -jar target/zeebe-script-worker-{VERSION}.jar`
+```
+docker pull camunda/zeebe-script-worker:latest
+```
+* configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`) 
+
+For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and the worker. 
+
+```
+cd docker
+docker-compose up
+```
+
+### Manual
+
+1. Download the latest [worker JAR](https://github.com/zeebe-io/zeebe-script-worker/releases) _(zeebe-script-worker-%{VERSION}.jar
+)_
+
+1. Start the worker
+    `java -jar zeebe-script-worker-{VERSION}.jar`
 
 ### Configuration
 
-The connection can be changed by setting the environment variables:
-* `zeebe.client.broker.contactPoint` (default: `127.0.0.1:26500`).
+The worker is a Spring Boot application that uses the [Spring Zeebe Starter](https://github.com/zeebe-io/spring-zeebe). The configuration can be changed via environment variables or an `application.yaml` file. See also the following resources:
+* [Spring Zeebe Configuration](https://github.com/zeebe-io/spring-zeebe#configuring-zeebe-connection)
+* [Spring Boot Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config)
+
+```
+zeebe:
+  worker:
+    defaultName: script-worker
+    defaultType: script
+    threads: 3
+
+  client:
+    job.timeout: 10000
+    broker.contactPoint: 127.0.0.1:26500
+    security.plaintext: true
+```
 
 ## Build from Source
 
-Build with Maven:
-    
+Build with Maven
+
 `mvn clean install`
 
 ## Code of Conduct
