@@ -67,12 +67,12 @@ The worker is a Spring Boot application that uses the [Spring Zeebe Starter](htt
 
 ```
 zeebe:
-  worker:
-    defaultName: script-worker
-    defaultType: script
-    threads: 3
-
   client:
+    worker:
+      defaultName: script-worker
+      defaultType: script
+      threads: 3
+
     job.timeout: 10000
     broker.contactPoint: 127.0.0.1:26500
     security.plaintext: true
