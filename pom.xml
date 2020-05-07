@@ -22,7 +22,7 @@
         <version.groovy>2.4.19</version.groovy>
         <version.feel>1.11.0</version.feel>
 
-        <version.spring.boot>2.2.6.RELEASE</version.spring.boot>
+        <version.spring.boot>2.2.7.RELEASE</version.spring.boot>
         <version.java>11</version.java>
         <java.version>${version.java}</java.version>
 
