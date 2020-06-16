@@ -20,7 +20,7 @@
         <version.zeebe.spring>0.23.0</version.zeebe.spring>
 
         <version.groovy>2.4.19</version.groovy>
-        <version.feel>1.11.0</version.feel>
+        <version.feel>1.11.2</version.feel>
 
         <version.spring.boot>2.3.1.RELEASE</version.spring.boot>
         <version.java>11</version.java>
