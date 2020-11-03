@@ -17,7 +17,7 @@
 
     <properties>
         <version.zeebe>0.25.0</version.zeebe>
-        <version.zeebe.spring>0.24.0</version.zeebe.spring>
+        <version.zeebe.spring>0.25.0</version.zeebe.spring>
 
         <version.groovy>2.4.20</version.groovy>
         <version.feel>1.12.3</version.feel>
