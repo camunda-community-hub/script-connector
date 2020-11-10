@@ -170,6 +170,17 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <!-- Needs to unpack this dependency.
+                     See: https://github.com/sdeleuze/kotlin-script-templating/issues/7#issuecomment-364572513
+                     -->
+                    <requiresUnpack>
+                        <dependency>
+                            <groupId>org.jetbrains.kotlin</groupId>
+                            <artifactId>kotlin-compiler-embeddable</artifactId>
+                        </dependency>
+                    </requiresUnpack>
+                </configuration>
             </plugin>
 
             <plugin>
