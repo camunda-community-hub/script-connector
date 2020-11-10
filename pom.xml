@@ -21,6 +21,7 @@
 
         <version.groovy>2.4.20</version.groovy>
         <version.feel>1.12.3</version.feel>
+        <version.kotlin>1.4.10</version.kotlin>
 
         <version.spring.boot>2.3.5.RELEASE</version.spring.boot>
         <version.java>11</version.java>
@@ -49,6 +50,14 @@
                 <version>${version.zeebe}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-bom</artifactId>
+                <version>${version.kotlin}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <dependency>
@@ -111,6 +120,12 @@
             <version>${version.feel}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-scripting-jsr223</artifactId>
+            <version>${version.kotlin}</version>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>
@@ -155,6 +170,17 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <!-- Needs to unpack this dependency.
+                     See: https://github.com/sdeleuze/kotlin-script-templating/issues/7#issuecomment-364572513
+                     -->
+                    <requiresUnpack>
+                        <dependency>
+                            <groupId>org.jetbrains.kotlin</groupId>
+                            <artifactId>kotlin-compiler-embeddable</artifactId>
+                        </dependency>
+                    </requiresUnpack>
+                </configuration>
             </plugin>
 
             <plugin>
