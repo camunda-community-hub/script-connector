@@ -1,23 +1,22 @@
 package io.zeebe.script;
 
-import io.zeebe.client.api.response.WorkflowInstanceEvent;
-import io.zeebe.model.bpmn.Bpmn;
-import io.zeebe.model.bpmn.BpmnModelInstance;
-import io.zeebe.protocol.record.intent.MessageIntent;
-import io.zeebe.protocol.record.value.MessageRecordValue;
-import io.zeebe.test.ZeebeTestRule;
-import io.zeebe.test.util.record.RecordingExporter;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
+import io.camunda.zeebe.model.bpmn.Bpmn;
+import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
+import io.camunda.zeebe.protocol.record.intent.MessageIntent;
+import io.camunda.zeebe.protocol.record.value.MessageRecordValue;
+import io.camunda.zeebe.test.ZeebeTestRule;
+import io.camunda.zeebe.test.util.record.RecordingExporter;
+import java.util.Collections;
+import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Collections;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,7 +28,7 @@ public class WorkflowTest {
   public static void init() {
     System.setProperty(
         "zeebe.client.broker.contactPoint",
-        TEST_RULE.getClient().getConfiguration().getBrokerContactPoint());
+        TEST_RULE.getClient().getConfiguration().getGatewayAddress());
   }
 
   @Test
@@ -46,7 +45,7 @@ public class WorkflowTest {
                         .zeebeTaskHeader("script", "x + 1"))
             .done();
 
-    final WorkflowInstanceEvent workflowInstance =
+    final ProcessInstanceEvent workflowInstance =
         deployAndCreateInstance(workflow, Collections.singletonMap("x", 2));
 
     ZeebeTestRule.assertThat(workflowInstance).isEnded().hasVariable("result", 3);
@@ -63,15 +62,15 @@ public class WorkflowTest {
                 t ->
                     t.zeebeJobType("script")
                         .zeebeTaskHeader("language", "groovy")
-                        .zeebeTaskHeader("script", "job.workflowInstanceKey"))
+                        .zeebeTaskHeader("script", "job.processInstanceKey"))
             .done();
 
-    final WorkflowInstanceEvent workflowInstance =
+    final ProcessInstanceEvent workflowInstance =
         deployAndCreateInstance(workflow, Collections.emptyMap());
 
     ZeebeTestRule.assertThat(workflowInstance)
         .isEnded()
-        .hasVariable("result", workflowInstance.getWorkflowInstanceKey());
+        .hasVariable("result", workflowInstance.getProcessInstanceKey());
   }
 
   @Test
@@ -90,7 +89,7 @@ public class WorkflowTest {
                             "zeebeClient.newPublishMessageCommand().messageName('foo').correlationKey('bar').send().join()"))
             .done();
 
-    final WorkflowInstanceEvent workflowInstance =
+    final ProcessInstanceEvent workflowInstance =
         deployAndCreateInstance(workflow, Collections.emptyMap());
 
     ZeebeTestRule.assertThat(workflowInstance).isEnded();
@@ -101,16 +100,16 @@ public class WorkflowTest {
     assertThat(publishedMessage.getCorrelationKey()).isEqualTo("bar");
   }
 
-  private WorkflowInstanceEvent deployAndCreateInstance(
+  private ProcessInstanceEvent deployAndCreateInstance(
       final BpmnModelInstance workflow, Map<String, Object> variables) {
     TEST_RULE
         .getClient()
         .newDeployCommand()
-        .addWorkflowModel(workflow, "process.bpmn")
+        .addProcessModel(workflow, "process.bpmn")
         .send()
         .join();
 
-    final WorkflowInstanceEvent workflowInstance =
+    final ProcessInstanceEvent workflowInstance =
         TEST_RULE
             .getClient()
             .newCreateInstanceCommand()

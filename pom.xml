@@ -16,8 +16,8 @@
     </parent>
 
     <properties>
-        <version.zeebe>0.26.4</version.zeebe>
-        <version.zeebe.spring>0.26.2</version.zeebe.spring>
+        <version.zeebe>1.0.0</version.zeebe>
+        <version.zeebe.spring>1.0.0</version.zeebe.spring>
 
         <version.groovy>2.4.21</version.groovy>
         <version.feel>1.13.2</version.feel>
@@ -45,7 +45,7 @@
         <dependencies>
 
             <dependency>
-                <groupId>io.zeebe</groupId>
+                <groupId>io.camunda</groupId>
                 <artifactId>zeebe-bom</artifactId>
                 <version>${version.zeebe}</version>
                 <scope>import</scope>
@@ -75,7 +75,7 @@
 
         <!-- spring deps-->
         <dependency>
-            <groupId>io.zeebe.spring</groupId>
+            <groupId>io.camunda</groupId>
             <artifactId>spring-zeebe-starter</artifactId>
             <version>${version.zeebe.spring}</version>
         </dependency>
@@ -142,7 +142,7 @@
         </dependency>
 
         <dependency>
-            <groupId>io.zeebe</groupId>
+            <groupId>io.camunda</groupId>
             <artifactId>zeebe-test</artifactId>
             <scope>test</scope>
         </dependency>
