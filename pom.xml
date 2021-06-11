@@ -23,7 +23,7 @@
         <version.feel>1.13.2</version.feel>
         <version.kotlin>1.5.10</version.kotlin>
 
-        <version.spring.boot>2.5.0</version.spring.boot>
+        <version.spring.boot>2.5.1</version.spring.boot>
         <version.java>11</version.java>
         <java.version>${version.java}</java.version>
 
