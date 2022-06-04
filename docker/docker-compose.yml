@@ -15,7 +15,7 @@ services:
       - "9600:9600"
     networks:
       - zeebe_network
-  monitor:
+  zeebe-script-worker:
     container_name: zeebe-script-worker
     image: ghcr.io/camunda-community-hub/zeebe-script-worker:1.0.0
     environment:
