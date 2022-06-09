@@ -21,7 +21,7 @@
 
         <version.groovy>2.4.21</version.groovy>
         <version.feel>1.14.2</version.feel>
-        <version.kotlin>1.6.21</version.kotlin>
+        <version.kotlin>1.7.0</version.kotlin>
 
         <version.spring.boot>2.7.0</version.spring.boot>
         <version.java>11</version.java>
