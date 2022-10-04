@@ -145,7 +145,7 @@
         <dependency>
             <groupId>io.zeebe</groupId>
             <artifactId>zeebe-test-container</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.2</version>
             <scope>test</scope>
         </dependency>
 
