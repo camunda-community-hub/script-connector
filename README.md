@@ -47,7 +47,7 @@ Available script languages:
 The docker image for the worker is published on [GitHub Packages](https://github.com/orgs/camunda-community-hub/packages/container/package/zeebe-script-worker).
 
 ```
-docker pull ghcr.io/camunda-community-hub/zeebe-script-worker:1.0.0
+docker pull ghcr.io/camunda-community-hub/zeebe-script-worker:1.2.0
 ```
 * configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`) 
 
