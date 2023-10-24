@@ -15,12 +15,11 @@
  */
 package io.zeebe.script;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class EvaluationMustacheTest {
 
@@ -66,9 +65,8 @@ public class EvaluationMustacheTest {
   public void shouldIterateOverListVariable() {
 
     final Object result =
-            scriptEvaluator.evaluate("mustache", "{{#x}}i:{{.}} {{/x}}", Map.of("x", List.of(1, 2, 3)));
+        scriptEvaluator.evaluate("mustache", "{{#x}}i:{{.}} {{/x}}", Map.of("x", List.of(1, 2, 3)));
 
     assertThat(result).isEqualTo("i:1 i:2 i:3 ");
   }
-
 }

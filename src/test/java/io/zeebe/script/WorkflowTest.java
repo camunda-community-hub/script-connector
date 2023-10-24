@@ -4,33 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ProcessInstanceResult;
-import io.zeebe.containers.ZeebeContainer;
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
+import io.camunda.zeebe.spring.test.ZeebeSpringTest;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest
-@Testcontainers
+@ZeebeSpringTest
 public class WorkflowTest {
 
-  @Container private static final ZeebeContainer ZEEBE_CONTAINER = new ZeebeContainer();
-
-  private static ZeebeClient ZEEBE_CLIENT;
-
-  @BeforeAll
-  public static void init() {
-    final var gatewayContactPoint = ZEEBE_CONTAINER.getExternalGatewayAddress();
-    System.setProperty("zeebe.client.broker.contactPoint", gatewayContactPoint);
-
-    ZEEBE_CLIENT =
-        ZeebeClient.newClientBuilder().gatewayAddress(gatewayContactPoint).usePlaintext().build();
-  }
+  @Autowired ZeebeClient zeebeClient;
 
   @Test
   public void shouldReturnResult() {
@@ -107,9 +94,9 @@ public class WorkflowTest {
 
   private ProcessInstanceResult deployAndCreateInstance(
       final BpmnModelInstance workflow, Map<String, Object> variables) {
-    ZEEBE_CLIENT.newDeployCommand().addProcessModel(workflow, "process.bpmn").send().join();
+    zeebeClient.newDeployResourceCommand().addProcessModel(workflow, "process.bpmn").send().join();
 
-    return ZEEBE_CLIENT
+    return zeebeClient
         .newCreateInstanceCommand()
         .bpmnProcessId("process")
         .latestVersion()

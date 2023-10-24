@@ -6,6 +6,12 @@
 
 [![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-0072Ce)](https://github.com/camunda-community-hub/community/blob/main/extension-lifecycle.md#compatiblilty)
 
+Available script languages:
+* [javascript](https://www.graalvm.org/) (GraalVM JS)
+* [groovy](http://groovy-lang.org/)
+* [feel](https://github.com/camunda/feel-scala)
+
+_This is a community project meant for playing around with Zeebe. It is not officially supported by the Zeebe Team (i.e. no gurantees). Everybody is invited to contribute!_
 A Zeebe worker to evaluate scripts (i.e. script tasks). Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
 
 ## Usage
@@ -31,10 +37,10 @@ Example BPMN with service task:
 * available context/variables in script:
   * `job` (ActivatedJob) - the current job
   * `zeebeClient` (ZeebeClient) - the client of the worker
-* the result of the evaluation is passed as `result` variable   
+* the result of the evaluation is passed as `result` variable
 
 Available script languages:
-* javascript (Oracle Nashorn)
+* javascript (graalvm)
 * [groovy](http://groovy-lang.org/)
 * [feel](https://github.com/camunda/feel-scala)
 * [mustache](http://mustache.github.io/mustache.5.html)
@@ -49,9 +55,9 @@ The docker image for the worker is published on [GitHub Packages](https://github
 ```
 docker pull ghcr.io/camunda-community-hub/zeebe-script-worker:1.2.0
 ```
-* configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`) 
+* configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`)
 
-For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and the worker. 
+For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and the worker.
 
 ```
 cd docker

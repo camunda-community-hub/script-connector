@@ -19,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 public class EvaluationJavaScriptTest {
@@ -33,7 +33,7 @@ public class EvaluationJavaScriptTest {
     final Object result =
         scriptEvaluator.evaluate("javascript", "x * 2", Collections.singletonMap("x", 2));
 
-    assertThat(result).isEqualTo(4.0);
+    assertThat(result).isEqualTo(4);
   }
 
   @Test
@@ -67,10 +67,19 @@ public class EvaluationJavaScriptTest {
     final Map<String, Object> result =
         (Map<String, Object>)
             scriptEvaluator.evaluate(
-                "javascript",
-                "result = {'foo':foo,'bar':'bar'}",
-                Collections.singletonMap("foo", 123));
+                "javascript", "({'foo':foo,'bar':'bar'})", Collections.singletonMap("foo", 123));
 
     assertThat(result).hasSize(2).contains(entry("bar", "bar"), entry("foo", 123));
+  }
+
+  @Test
+  public void shouldReturnArray() {
+
+    @SuppressWarnings("unchecked")
+    final List<String> result =
+        (List<String>)
+            scriptEvaluator.evaluate("javascript", "['foo','bar']", Collections.emptyMap());
+
+    assertThat(result).hasSize(2).contains("foo", "bar");
   }
 }
