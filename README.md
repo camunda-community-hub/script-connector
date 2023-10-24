@@ -38,7 +38,6 @@ Example BPMN with service task:
 Available script languages:
 * [javascript](https://www.graalvm.org/) (GraalVM JS)
 * [groovy](http://groovy-lang.org/)
-* [feel](https://github.com/camunda/feel-scala)
 * [mustache](http://mustache.github.io/mustache.5.html)
 * [kotlin](https://kotlinlang.org/)
 

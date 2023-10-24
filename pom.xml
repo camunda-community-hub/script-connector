@@ -31,7 +31,6 @@
     <version.zeebe.spring>8.2.4</version.zeebe.spring>
 
     <version.groovy>2.4.21</version.groovy>
-    <version.feel>1.17.1</version.feel>
     <version.kotlin>1.8.21</version.kotlin>
     <version.graalvm>23.0.2</version.graalvm>
 
@@ -117,12 +116,6 @@
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
       <version>${version.groovy}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.camunda.feel</groupId>
-      <artifactId>feel-engine</artifactId>
-      <version>${version.feel}</version>
     </dependency>
 
     <dependency>
@@ -362,7 +355,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>3.1.5</version>
+        <version>${version.spring.boot}</version>
         <executions>
           <execution>
             <goals>
