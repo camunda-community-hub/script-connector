@@ -37,10 +37,10 @@ Example BPMN with service task:
 * available context/variables in script:
   * `job` (ActivatedJob) - the current job
   * `zeebeClient` (ZeebeClient) - the client of the worker
-* the result of the evaluation is passed as `result` variable   
+* the result of the evaluation is passed as `result` variable
 
 Available script languages:
-* javascript (Oracle Nashorn)
+* javascript (graalvm)
 * [groovy](http://groovy-lang.org/)
 * [feel](https://github.com/camunda/feel-scala)
 * [mustache](http://mustache.github.io/mustache.5.html)
@@ -55,9 +55,9 @@ The docker image for the worker is published on [GitHub Packages](https://github
 ```
 docker pull ghcr.io/camunda-community-hub/zeebe-script-worker:1.2.0
 ```
-* configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`) 
+* configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`)
 
-For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and the worker. 
+For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and the worker.
 
 ```
 cd docker

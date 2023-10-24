@@ -15,14 +15,13 @@
  */
 package io.zeebe.script;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -49,24 +48,18 @@ public class ScriptEvaluator {
 
   private Object evalWithScriptEngine(
       String language, String script, Map<String, Object> variables) {
-    final ScriptEngine scriptEngine =
-        cachedScriptEngines.computeIfAbsent(language, scriptEngineManager::getEngineByName);
-
-    if (scriptEngine == null) {
-      final String msg = String.format("No script engine found with name '%s'", language);
-      throw new RuntimeException(msg);
-    }
-
     try {
-      return eval(scriptEngine, script, variables);
-
       if (GraalEvaluator.SUPPORTED_LANGUAGES.contains(language)) {
         return graalEvaluator.evaluate(language, script, variables);
-
       } else {
-        return scriptEngineEvaluator.evaluate(language, script, variables);
+        final ScriptEngine scriptEngine =
+            cachedScriptEngines.computeIfAbsent(language, scriptEngineManager::getEngineByName);
+        if (scriptEngine == null) {
+          final String msg = String.format("No script engine found with name '%s'", language);
+          throw new RuntimeException(msg);
+        }
+        return eval(scriptEngine, script, variables);
       }
-
     } catch (Exception e) {
       final String msg = String.format("Failed to evaluate script '%s' (%s)", script, language);
       throw new RuntimeException(msg, e);

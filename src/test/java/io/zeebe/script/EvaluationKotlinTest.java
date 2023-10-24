@@ -23,7 +23,8 @@ public class EvaluationKotlinTest {
   @Test
   public void shouldReturnString() {
     final Object result =
-        scriptEvaluator.evaluate("kotlin", "\"url?id=\" + id", Collections.singletonMap("id", "123"));
+        scriptEvaluator.evaluate(
+            "kotlin", "\"url?id=\" + id", Collections.singletonMap("id", "123"));
 
     assertThat(result).isEqualTo("url?id=123");
   }
@@ -44,7 +45,9 @@ public class EvaluationKotlinTest {
     final Map<String, Object> result =
         (Map<String, Object>)
             scriptEvaluator.evaluate(
-                "kotlin", "mapOf(\"foo\" to foo, \"bar\" to \"bar\")", Collections.singletonMap("foo", 123));
+                "kotlin",
+                "mapOf(\"foo\" to foo, \"bar\" to \"bar\")",
+                Collections.singletonMap("foo", 123));
 
     assertThat(result).hasSize(2).contains(entry("foo", 123), entry("bar", "bar"));
   }

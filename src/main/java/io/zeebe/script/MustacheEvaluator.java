@@ -2,7 +2,6 @@ package io.zeebe.script;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-
 import java.util.Map;
 
 public final class MustacheEvaluator implements ZeebeScriptEvaluator {

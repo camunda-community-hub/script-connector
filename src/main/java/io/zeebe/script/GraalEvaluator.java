@@ -72,9 +72,7 @@ public class GraalEvaluator {
           .collect(Collectors.toList());
 
     } else if (value.hasMembers()) {
-      return value
-          .getMemberKeys()
-          .stream()
+      return value.getMemberKeys().stream()
           .collect(
               Collectors.toMap(Function.identity(), key -> mapValueToObject(value.getMember(key))));
     }

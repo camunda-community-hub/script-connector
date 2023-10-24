@@ -81,7 +81,8 @@ public class ScriptEvaluatorTest {
 
   @Test
   public void shouldEvaluateKotlinWithVariables() {
-    final Object result = scriptEvaluator.evaluate("kotlin", "a", Collections.singletonMap("a", 123));
+    final Object result =
+        scriptEvaluator.evaluate("kotlin", "a", Collections.singletonMap("a", 123));
 
     assertThat(result).isEqualTo(123);
   }
