@@ -30,9 +30,6 @@ Example BPMN with service task:
 * required custom headers:
   * `language` - the name of the script language
   * `script` - the script to evaluate
-* available context/variables in script:
-  * `job` (ActivatedJob) - the current job
-  * `zeebeClient` (ZeebeClient) - the client of the worker
 * the result of the evaluation is passed as `result` variable
 
 Available script languages:

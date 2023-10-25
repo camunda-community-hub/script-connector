@@ -1,4 +1,4 @@
-package io.zeebe.script;
+package io.camunda.community.connector.script;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.entry;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import io.camunda.community.connector.script.ScriptEvaluator;
 import org.junit.jupiter.api.Test;
 
 public class EvaluationKotlinTest {

@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.zeebe.script;
+package io.camunda.community.connector.script;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collections;
+
+import io.camunda.community.connector.script.ScriptEvaluator;
 import org.junit.jupiter.api.Test;
 
 public class ScriptEvaluatorTest {
@@ -37,13 +39,6 @@ public class ScriptEvaluatorTest {
     final Object result = scriptEvaluator.evaluate("groovy", "123", Collections.emptyMap());
 
     assertThat(result).isEqualTo(123);
-  }
-
-  @Test
-  public void shouldEvaluateFeel() {
-    final Object result = scriptEvaluator.evaluate("feel", "123", Collections.emptyMap());
-
-    assertThat(result).isEqualTo(123L);
   }
 
   @Test
@@ -69,14 +64,6 @@ public class ScriptEvaluatorTest {
         scriptEvaluator.evaluate("groovy", "a", Collections.singletonMap("a", 123));
 
     assertThat(result).isEqualTo(123);
-  }
-
-  @Test
-  public void shouldEvaluateFeelWithVariables() {
-
-    final Object result = scriptEvaluator.evaluate("feel", "a", Collections.singletonMap("a", 123));
-
-    assertThat(result).isEqualTo(123L);
   }
 
   @Test

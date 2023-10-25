@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.zeebe.script;
+package io.camunda.community.connector.script;
 
+import io.camunda.community.connector.script.spi.ScriptEvaluatorExtension;
 import java.util.HashMap;
 import java.util.Map;
 import javax.script.Bindings;
@@ -22,25 +23,26 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ScriptEvaluator {
 
   private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
-  private final Map<String, ZeebeScriptEvaluator> additionalEvaluators =
-      Map.of("mustache", new MustacheEvaluator());
-
   private final Map<String, ScriptEngine> cachedScriptEngines = new HashMap<>();
-  private final GraalEvaluator graalEvaluator = new GraalEvaluator();
-  private final ScriptEngineEvaluator scriptEngineEvaluator = new ScriptEngineEvaluator();
+  private final Map<String, ScriptEvaluatorExtension> scriptEvaluatorExtensions = new HashMap<>();
+
+  public ScriptEvaluator() {
+    ScriptEvaluatorExtension.load()
+        .forEach(
+            e -> e.getEvaluatedLanguage()
+                .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
+  }
 
   public Object evaluate(String language, String script, Map<String, Object> variables) {
 
-    if (additionalEvaluators.containsKey(language)) {
-      final var scriptEvaluator = additionalEvaluators.get(language);
-      return scriptEvaluator.eval(script, variables);
+    if (scriptEvaluatorExtensions.containsKey(language)) {
+      final var scriptEvaluator = scriptEvaluatorExtensions.get(language);
+      return scriptEvaluator.evaluateScript(script, variables);
     }
 
     return evalWithScriptEngine(language, script, variables);
@@ -49,17 +51,13 @@ public class ScriptEvaluator {
   private Object evalWithScriptEngine(
       String language, String script, Map<String, Object> variables) {
     try {
-      if (GraalEvaluator.SUPPORTED_LANGUAGES.contains(language)) {
-        return graalEvaluator.evaluate(language, script, variables);
-      } else {
-        final ScriptEngine scriptEngine =
-            cachedScriptEngines.computeIfAbsent(language, scriptEngineManager::getEngineByName);
-        if (scriptEngine == null) {
-          final String msg = String.format("No script engine found with name '%s'", language);
-          throw new RuntimeException(msg);
-        }
-        return eval(scriptEngine, script, variables);
+      final ScriptEngine scriptEngine =
+          cachedScriptEngines.computeIfAbsent(language, scriptEngineManager::getEngineByName);
+      if (scriptEngine == null) {
+        final String msg = String.format("No script engine found with name '%s'", language);
+        throw new RuntimeException(msg);
       }
+      return eval(scriptEngine, script, variables);
     } catch (Exception e) {
       final String msg = String.format("Failed to evaluate script '%s' (%s)", script, language);
       throw new RuntimeException(msg, e);

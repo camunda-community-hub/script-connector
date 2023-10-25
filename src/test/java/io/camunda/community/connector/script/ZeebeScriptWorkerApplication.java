@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.zeebe.script;
+package io.camunda.community.connector.script;
 
 import io.camunda.zeebe.spring.client.EnableZeebeClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableZeebeClient
 public class ZeebeScriptWorkerApplication {
 
   public static void main(String[] args) {

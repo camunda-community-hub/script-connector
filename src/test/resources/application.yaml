@@ -1,0 +1,7 @@
+camunda.operate.enabled: false
+camunda:
+  connector:
+    webhook:
+      enabled: false
+    polling:
+      enabled: false
