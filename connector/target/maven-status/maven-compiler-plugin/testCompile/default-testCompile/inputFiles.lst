@@ -1,9 +1,0 @@
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/EvaluationGroovyTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/LanguageProviderTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/EvaluationMustacheTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/ScriptResourceProviderTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/ScriptEvaluatorTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/EvaluationJavaScriptTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/WorkflowTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/EvaluationKotlinTest.java
-/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/test/java/io/camunda/community/connector/script/ZeebeScriptWorkerApplication.java

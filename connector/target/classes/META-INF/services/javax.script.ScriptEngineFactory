@@ -1,3 +1,0 @@
-com.oracle.truffle.js.scriptengine.GraalJSEngineFactory
-kotlin.script.experimental.jsr223.KotlinJsr223DefaultScriptEngineFactory
-org.codehaus.groovy.jsr223.GroovyScriptEngineFactory
