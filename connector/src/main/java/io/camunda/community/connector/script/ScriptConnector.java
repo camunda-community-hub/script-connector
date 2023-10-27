@@ -6,8 +6,8 @@ import io.camunda.connector.api.outbound.OutboundConnectorFunction;
 import java.util.Map;
 
 @OutboundConnector(
-    type = "io.camunda.community:script",
-    name = "connector-script",
+    type = "io.camunda.community:script-connector",
+    name = "script-connector",
     inputVariables = {})
 public class ScriptConnector implements OutboundConnectorFunction {
   static final String PARAM_LANGUAGE = "language";

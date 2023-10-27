@@ -9,7 +9,7 @@ import java.util.Map;
 
 @OutboundConnector(
     type = "script",
-    name = "connector-script-legacy",
+    name = "script-connector-legacy",
     inputVariables = {})
 public class ScriptConnectorLegacy implements OutboundConnectorFunction {
   private static final String PARAM_LANGUAGE = "language";

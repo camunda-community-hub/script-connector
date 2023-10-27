@@ -30,4 +30,4 @@ services:
     networks:
       - zeebe_network
     volumes:
-    - ./../connector/target/script-connector-1.2.1-SNAPSHOT-shaded.jar:/opt/app/script-connector.jar
+    - ./../connector/target/script-connector-1.2.1-SNAPSHOT-with-script-engines.jar:/opt/app/script-connector.jar
