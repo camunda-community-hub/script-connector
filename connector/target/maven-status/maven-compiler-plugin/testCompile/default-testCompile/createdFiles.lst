@@ -1,0 +1,9 @@
+io/camunda/community/connector/script/EvaluationMustacheTest.class
+io/camunda/community/connector/script/EvaluationGroovyTest.class
+io/camunda/community/connector/script/ScriptEvaluatorTest.class
+io/camunda/community/connector/script/EvaluationKotlinTest.class
+io/camunda/community/connector/script/WorkflowTest.class
+io/camunda/community/connector/script/LanguageProviderTest.class
+io/camunda/community/connector/script/ZeebeScriptWorkerApplication.class
+io/camunda/community/connector/script/ScriptResourceProviderTest.class
+io/camunda/community/connector/script/EvaluationJavaScriptTest.class

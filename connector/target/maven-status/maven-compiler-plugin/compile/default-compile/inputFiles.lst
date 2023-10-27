@@ -1,0 +1,10 @@
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/ScriptResourceProvider.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/spi/LanguageProviderExtension.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/ScriptEvaluator.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/ScriptConnectorLegacy.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/ScriptConnector.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/ScriptConnectorInput.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/spi/impl/DefaultLanguageProviderExtension.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/LanguageProvider.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/spi/impl/MustacheEvaluatorExtension.java
+/Users/jonathanlukas/git/camunda/zeebe-script-worker/connector/src/main/java/io/camunda/community/connector/script/spi/ScriptEvaluatorExtension.java

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: io.camunda.community.connector.script.ScriptEvaluatorTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.405 s -- in io.camunda.community.connector.script.ScriptEvaluatorTest

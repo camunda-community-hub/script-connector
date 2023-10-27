@@ -1,0 +1,11 @@
+io/camunda/community/connector/script/spi/impl/MustacheEvaluatorExtension.class
+io/camunda/community/connector/script/spi/ScriptEvaluatorExtension.class
+io/camunda/community/connector/script/spi/impl/DefaultLanguageProviderExtension.class
+io/camunda/community/connector/script/ScriptEvaluator.class
+io/camunda/community/connector/script/ScriptResourceProvider$ResourceLoader.class
+io/camunda/community/connector/script/ScriptConnectorLegacy.class
+io/camunda/community/connector/script/ScriptResourceProvider.class
+io/camunda/community/connector/script/LanguageProvider.class
+io/camunda/community/connector/script/spi/LanguageProviderExtension.class
+io/camunda/community/connector/script/ScriptConnectorInput.class
+io/camunda/community/connector/script/ScriptConnector.class
