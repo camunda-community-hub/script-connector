@@ -59,7 +59,6 @@
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>io.camunda</groupId>
         <artifactId>zeebe-bom</artifactId>
@@ -84,6 +83,11 @@
       <dependency>
         <groupId>io.camunda.connector</groupId>
         <artifactId>connector-core</artifactId>
+        <version>${version.camunda-connectors}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda.connector</groupId>
+        <artifactId>element-template-generator</artifactId>
         <version>${version.camunda-connectors}</version>
       </dependency>
       <dependency>
@@ -127,6 +131,11 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>io.camunda.connector</groupId>
+          <artifactId>element-template-generator-maven-plugin</artifactId>
+          <version>${version.camunda-connectors}</version>
+        </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>

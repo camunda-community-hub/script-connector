@@ -1,5 +1,6 @@
 package io.camunda.community.connector.script;
 
+import static io.camunda.community.connector.script.ScriptConnector.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.camunda.zeebe.client.ZeebeClient;
@@ -39,6 +40,28 @@ public class WorkflowTest {
         deployAndCreateInstance(workflow, Collections.singletonMap("x", 2));
 
     assertThat(workflowInstanceResult.getVariablesAsMap()).containsEntry("result", 3);
+  }
+
+  @Test
+  void shouldReturnResultConnector() {
+    BpmnModelInstance modelInstance =
+        Bpmn.createExecutableProcess("process")
+            .startEvent()
+            .scriptTask(
+                "task",
+                t ->
+                    t.zeebeJobType(SCRIPT_CONNECTOR_TYPE)
+                        .zeebeInput("={a:a,b:a}", "context")
+                        .zeebeInput("a+b", "script.embedded")
+                        .zeebeInput("embedded", "script.type")
+                        .zeebeInput("javascript", "script.language")
+                        .zeebeTaskHeader("resultVariable", "result"))
+            .endEvent()
+            .done();
+    final var workflowInstanceResult =
+        deployAndCreateInstance(modelInstance, Collections.singletonMap("a", 3));
+
+    assertThat(workflowInstanceResult.getVariablesAsMap()).containsEntry("result", 6);
   }
 
   @Test

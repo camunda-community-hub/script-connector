@@ -1,19 +1,26 @@
 package io.camunda.community.connector.script;
 
+import io.camunda.community.connector.script.ScriptConnectorInput.Type;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Embedded;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Resource;
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
+import io.camunda.connector.generator.annotation.ElementTemplate;
 import java.util.Map;
 
 @OutboundConnector(
-    type = "io.camunda.community:script-connector",
+    type = ScriptConnector.SCRIPT_CONNECTOR_TYPE,
     name = "script-connector",
-    inputVariables = {})
+    inputVariables = {"script", "context"})
+@ElementTemplate(
+    id = ScriptConnector.SCRIPT_CONNECTOR_TYPE,
+    name = "Script Connector",
+    version = 1,
+    inputDataClass = ScriptConnectorInput.class,
+    description = "A connector to execute a script")
 public class ScriptConnector implements OutboundConnectorFunction {
-  static final String PARAM_LANGUAGE = "language";
-  static final String PARAM_SCRIPT = "script";
-  static final String PARAM_SCRIPT_RESOURCE = "scriptResource";
-  static final String PARAM_CONTEXT = "context";
+  public static final String SCRIPT_CONNECTOR_TYPE = "io.camunda.community:script-connector";
 
   private final ScriptEvaluator scriptEvaluator = new ScriptEvaluator();
   private final ScriptResourceProvider scriptResourceProvider = new ScriptResourceProvider();
@@ -29,13 +36,14 @@ public class ScriptConnector implements OutboundConnectorFunction {
   }
 
   private String extractLanguage(ScriptConnectorInput scriptConnectorInput) {
-    if (scriptConnectorInput.language() != null) {
-      return scriptConnectorInput.language();
+    Type script = scriptConnectorInput.script();
+    if (script instanceof Embedded e) {
+      return e.language();
+    } else if (script instanceof Resource r) {
+      return languageProvider.getLanguageForScriptResource(r.resource());
+    } else {
+      throw new IllegalStateException("No script or resource has been provided");
     }
-    if (scriptConnectorInput.scriptResource() != null) {
-      return languageProvider.getLanguageForScriptResource(scriptConnectorInput.scriptResource());
-    }
-    throw new IllegalStateException(String.format("No '%s' has been provided", PARAM_LANGUAGE));
   }
 
   private Object generateResponse(String resultVariable, Object evaluationResult) {
@@ -46,13 +54,13 @@ public class ScriptConnector implements OutboundConnectorFunction {
   }
 
   private String extractScript(ScriptConnectorInput scriptConnectorInput) {
-    if (scriptConnectorInput.script() != null) {
-      return scriptConnectorInput.script();
+    Type script = scriptConnectorInput.script();
+    if (script instanceof Embedded e) {
+      return e.embedded();
+    } else if (script instanceof Resource r) {
+      return scriptResourceProvider.provideScript(r.resource());
+    } else {
+      throw new IllegalStateException("No script or resource has been provided");
     }
-    if (scriptConnectorInput.scriptResource() != null) {
-      return scriptResourceProvider.provideScript(scriptConnectorInput.scriptResource());
-    }
-    throw new IllegalStateException(
-        String.format("No '%s' or '%s' has been provided", PARAM_SCRIPT, PARAM_SCRIPT_RESOURCE));
   }
 }
