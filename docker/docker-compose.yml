@@ -6,8 +6,8 @@ networks:
 
 services:
   zeebe:
-    container_name: zeebe_broker
-    image: camunda/zeebe:8.1.5
+    container_name: zeebe
+    image: camunda/zeebe:8.3.0
     environment:
       - ZEEBE_LOG_LEVEL=debug
     ports:
@@ -15,12 +15,30 @@ services:
       - "9600:9600"
     networks:
       - zeebe_network
-  zeebe-script-worker:
-    container_name: zeebe-script-worker
-    image: ghcr.io/camunda-community-hub/zeebe-script-worker:1.2.0
+  script-connector-runtime:
+    container_name: script-connector-runtime
+    image: ghcr.io/camunda-community-hub/script-connector/runtime:latest
     environment:
-      - zeebe.client.broker.contactPoint=zeebe:26500
+      - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
+      - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
     depends_on:
       - zeebe
     networks:
       - zeebe_network
+  script-connector-bundled:
+    container_name: script-connector-bundled
+    image: camunda/connectors-bundle:8.3.0
+    environment:
+    - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
+    - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
+    - CAMUNDA_CONNECTOR_POLLING_ENABLED=false
+    - CAMUNDA_CONNECTOR_WEBHOOK_ENABLED=false
+    - SPRING_MAIN_WEB-APPLICATION-TYPE=none
+    - OPERATE_CLIENT_ENABLED=false
+    depends_on:
+    - zeebe
+    networks:
+    - zeebe_network
+    volumes:
+    - ./../connector/target/script-connector-1.2.1-SNAPSHOT-shaded.jar:/opt/custom/script-connector.jar
+

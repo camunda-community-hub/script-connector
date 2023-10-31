@@ -3,11 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <name>Zeebe Script Worker</name>
-  <groupId>io.zeebe</groupId>
-  <artifactId>zeebe-script-worker</artifactId>
+  <name>Script Connector Parent</name>
+  <modules>
+    <module>connector</module>
+    <module>runtime</module>
+  </modules>
+  <groupId>io.camunda.connectors.community</groupId>
+  <artifactId>script-connector-parent</artifactId>
   <version>1.2.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <parent>
     <groupId>org.camunda.community</groupId>
@@ -26,9 +30,10 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
-    <version.spring.boot>3.1.5</version.spring.boot>
-    <version.zeebe>8.2.16</version.zeebe>
-    <version.zeebe.spring>8.2.4</version.zeebe.spring>
+    <version.spring-boot>3.1.5</version.spring-boot>
+    <version.camunda>8.3.0</version.camunda>
+    <version.camunda-spring>8.3.0</version.camunda-spring>
+    <version.camunda-connectors>8.3.0</version.camunda-connectors>
 
     <version.groovy>2.4.21</version.groovy>
     <version.kotlin>1.9.10</version.kotlin>
@@ -39,29 +44,28 @@
     <plugin.version.maven-install-plugin>3.1.1</plugin.version.maven-install-plugin>
     <plugin.version.maven-resources-plugin>3.3.1</plugin.version.maven-resources-plugin>
     <plugin.version.maven-shade-plugin>3.5.1</plugin.version.maven-shade-plugin>
-    <plugin.version.maven-surefire-plugin>3.2.1</plugin.version.maven-surefire-plugin>
+    <plugin.version.maven-surefire-plugin>3.1.2</plugin.version.maven-surefire-plugin>
     <plugin.version.spotless-maven-plugin>2.40.0</plugin.version.spotless-maven-plugin>
     <plugin.version.maven-compiler-plugin>3.11.0</plugin.version.maven-compiler-plugin>
     <plugin.version.native-maven-plugin>0.9.28</plugin.version.native-maven-plugin>
-    <plugin.version.maven-depdendency-plugin>3.6.1</plugin.version.maven-depdendency-plugin>
+    <plugin.version.maven-depdendency-plugin>3.6.0</plugin.version.maven-depdendency-plugin>
     <plugin.version.maven-site-plugin>3.12.1</plugin.version.maven-site-plugin>
     <plugin.version.maven-assembly-plugin>3.6.0</plugin.version.maven-assembly-plugin>
     <plugin.version.maven-release-plugin>3.0.1</plugin.version.maven-release-plugin>
     <plugin.version.frontend-maven-plugin>1.14.2</plugin.version.frontend-maven-plugin>
     <plugin.version.maven-source-plugin>3.3.0</plugin.version.maven-source-plugin>
+    <plugin.version.maven-jar-plugin>3.3.0</plugin.version.maven-jar-plugin>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>io.camunda</groupId>
         <artifactId>zeebe-bom</artifactId>
-        <version>${version.zeebe}</version>
+        <version>${version.camunda}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-
       <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-bom</artifactId>
@@ -69,107 +73,69 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>${version.spring.boot}</version>
+        <version>${version.spring-boot}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
+      <dependency>
+        <groupId>io.camunda.connector</groupId>
+        <artifactId>connector-core</artifactId>
+        <version>${version.camunda-connectors}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda.connector</groupId>
+        <artifactId>element-template-generator</artifactId>
+        <version>${version.camunda-connectors}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda.spring</groupId>
+        <artifactId>spring-boot-starter-camunda-test</artifactId>
+        <version>${version.camunda-spring}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda.connector</groupId>
+        <artifactId>spring-boot-starter-camunda-connectors</artifactId>
+        <version>${version.camunda-connectors}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-all</artifactId>
+        <version>${version.groovy}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.graalvm.js</groupId>
+        <artifactId>js</artifactId>
+        <version>${version.graalvm}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.graalvm.js</groupId>
+        <artifactId>js-scriptengine</artifactId>
+        <version>${version.graalvm}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-scripting-jsr223</artifactId>
+        <version>${version.kotlin}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda.connectors.community</groupId>
+        <artifactId>script-connector</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <dependencies>
-
-    <!-- spring deps-->
-    <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>spring-zeebe-starter</artifactId>
-      <version>${version.zeebe.spring}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-mustache</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- script languages -->
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <version>${version.groovy}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.graalvm.sdk</groupId>
-      <artifactId>graal-sdk</artifactId>
-      <version>${version.graalvm}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
-      <version>${version.graalvm}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-scripting-jsr223</artifactId>
-      <version>${version.kotlin}</version>
-    </dependency>
-
-    <!-- test -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>5.10.0</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>3.24.2</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>1.19.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>spring-zeebe-test</artifactId>
-      <version>${version.zeebe.spring}</version>
-      <scope>test</scope>
-    </dependency>
-
-  </dependencies>
 
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>io.camunda.connector</groupId>
+          <artifactId>element-template-generator-maven-plugin</artifactId>
+          <version>${version.camunda-connectors}</version>
+        </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -259,7 +225,7 @@
               <!--
                 <dependencyConvergence />
               -->
-              <requirePluginVersions />
+              <requirePluginVersions/>
             </rules>
           </configuration>
           <executions>
@@ -281,8 +247,8 @@
                   <include>*.md</include>
                   <include>.gitignore</include>
                 </includes>
-                <trimTrailingWhitespace />
-                <endWithNewline />
+                <trimTrailingWhitespace/>
+                <endWithNewline/>
                 <indent>
                   <spaces>true</spaces>
                   <spacesPerTab>2</spacesPerTab>
@@ -290,9 +256,9 @@
               </format>
             </formats>
             <java>
-              <googleJavaFormat />
+              <googleJavaFormat/>
             </java>
-            <pom />
+            <pom/>
           </configuration>
         </plugin>
         <plugin>
@@ -327,7 +293,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore />
+                    <ignore/>
                   </action>
                 </pluginExecution>
               </pluginExecutions>
@@ -336,67 +302,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.1</version>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <source>${version.java}</source>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${version.spring.boot}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <!-- Needs to unpack this dependency.
-           See: https://github.com/sdeleuze/kotlin-script-templating/issues/7#issuecomment-364572513
-           -->
-          <requiresUnpack>
-            <dependency>
-              <groupId>org.jetbrains.kotlin</groupId>
-              <artifactId>kotlin-compiler-embeddable</artifactId>
-            </dependency>
-          </requiresUnpack>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <version>3.4.0</version>
-        <executions>
-          <execution>
-            <phase>deploy</phase>
-            <goals>
-              <goal>build</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <to>
-            <image>ghcr.io/camunda-community-hub/zeebe-script-worker</image>
-            <tags>${project.version}</tags>
-          </to>
-        </configuration>
-      </plugin>
-
-    </plugins>
   </build>
 
   <profiles>
@@ -447,38 +352,4 @@
       </build>
     </profile>
   </profiles>
-
-  <repositories>
-    <repository>
-      <id>zeebe</id>
-      <name>Zeebe Repository</name>
-      <url>https://artifacts.camunda.com/artifactory/zeebe-io/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-
-    <repository>
-      <id>zeebe-snapshots</id>
-      <name>Zeebe Snapshot Repository</name>
-      <url>https://artifacts.camunda.com/artifactory/zeebe-io-snapshots/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <scm>
-    <url>https://github.com/camunda-community-hub/zeebe-script-worker</url>
-    <connection>scm:git:git@github.com:camunda-community-hub/zeebe-script-worker.git</connection>
-    <developerConnection>scm:git:git@github.com:camunda-community-hub/zeebe-script-worker.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
 </project>
