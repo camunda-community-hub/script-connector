@@ -6,11 +6,16 @@
 
 [![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-0072Ce)](https://github.com/camunda-community-hub/community/blob/main/extension-lifecycle.md#compatiblilty)
 
-
-_This is a community project meant for playing around with Zeebe. It is not officially supported by the Zeebe Team (i.e. no gurantees). Everybody is invited to contribute!_
-A Zeebe worker to evaluate scripts (i.e. script tasks). Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
+_This is a community project that provides a connector. It is not officially supported by Camunda. Everybody is invited to contribute!_
+A connector to evaluate scripts (i.e. script tasks) that are not written in FEEL. Scripts are useful for prototyping, to do (simple) calculations, or creating/modifying variables.
 
 ## Usage
+
+### Legacy
+
+The legacy connector provides compatibility with the previous implementation `zeebe-script-worker`.
+
+>The context does not offer access to `job` or `zeebeClient` anymore.
 
 Example BPMN with service task:
 
@@ -21,6 +26,7 @@ Example BPMN with service task:
     <zeebe:taskHeaders>
       <zeebe:header key="language" value="javascript" />
       <zeebe:header key="script" value="a + b" />
+      <zeebe:header key="resultVariable" value="result" />
     </zeebe:taskHeaders>
   </bpmn:extensionElements>
 </bpmn:serviceTask>
@@ -30,64 +36,67 @@ Example BPMN with service task:
 * required custom headers:
   * `language` - the name of the script language
   * `script` - the script to evaluate
-* the result of the evaluation is passed as `result` variable
+  * `resultVariable` - the result of the evaluation is passed to this variable
 
-Available script languages:
+### Connector
+
+The connector provides an [element template](./connector/element-templates/script-connector.json) that can be used to configure it.
+
+### Script languages
+
+Available script languages are by default:
 * [javascript](https://www.graalvm.org/) (GraalVM JS)
 * [groovy](http://groovy-lang.org/)
 * [mustache](http://mustache.github.io/mustache.5.html)
 * [kotlin](https://kotlinlang.org/)
 
+To register new script languages, you can use the `ScriptEngineFactory` to register any JSR-223 compliant script engine.
+
+If you want to provide a non-compliant implementation, you can use the [`ScriptEvaluatorExtension`](./connector/src/main/java/io/camunda/community/connector/script/spi/ScriptEvaluatorExtension.java) SPI.
+
+To register custom file extensions, you can use the [`LanguageProviderExtension`](./connector/src/main/java/io/camunda/community/connector/script/spi/LanguageProviderExtension.java) SPI.
+
 ## Install
 
 ### Docker
 
-The docker image for the worker is published on [GitHub Packages](https://github.com/orgs/camunda-community-hub/packages/container/package/zeebe-script-worker).
+For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and both (standalone and bundled) containers.
 
 ```
-docker pull ghcr.io/camunda-community-hub/zeebe-script-worker:1.2.0
-```
-* configure the connection to the Zeebe broker by setting `zeebe.client.broker.contactPoint` (default: `localhost:26500`)
-
-For a local setup, the repository contains a [docker-compose file](docker/docker-compose.yml). It starts a Zeebe broker and the worker.
-
-```
+mvn clean package
 cd docker
 docker-compose up
 ```
 
+#### Standalone Runtime
+
+The docker image for the connector runtime is published as GitHub package.
+
+```
+docker pull ghcr.io/camunda-community-hub/script-connector/runtime:latest
+```
+
+Configure the connection to the Zeebe broker by setting the environment property `ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS` (default: `localhost:26500`)
+
+The docker-compose file shows an example how this works.
+
+#### Bundled Runtime
+
+To run the connector inside the bundle, you can use the shaded jar.
+
+The docker-compose file shows an example how this works.
+
 ### Manual
 
-1. Download the latest [worker JAR](https://github.com/zeebe-io/zeebe-script-worker/releases) _(zeebe-script-worker-%{VERSION}.jar
-)_
+#### Standalone Runtime
 
-1. Start the worker
-    `java -jar zeebe-script-worker-{VERSION}.jar`
+1. Download the runtime jar `script-connector-runtime-{VERSION}.jar`
+2. Start the connector runtime `java -jar script-connector-runtime-{VERSION}.jar`
 
-### Configuration
+#### Bundled Runtime
 
-The worker is a Spring Boot application that uses the [Spring Zeebe Starter](https://github.com/zeebe-io/spring-zeebe). The configuration can be changed via environment variables or an `application.yaml` file. See also the following resources:
-* [Spring Zeebe Configuration](https://github.com/zeebe-io/spring-zeebe#configuring-zeebe-connection)
-* [Spring Boot Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config)
-
-```
-zeebe:
-  client:
-    worker:
-      defaultName: script-worker
-      defaultType: script
-      threads: 3
-
-    job.timeout: 10000
-    broker.contactPoint: 127.0.0.1:26500
-    security.plaintext: true
-```
-
-## Build from Source
-
-Build with Maven
-
-`mvn clean install`
+1. Download the shaded connector jar  `script-connector-{VERSION}-shaded.jar`
+2. Copy it to your connector runtime.
 
 ## Code of Conduct
 

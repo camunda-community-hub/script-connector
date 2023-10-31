@@ -23,7 +23,7 @@ public class LanguageProvider {
     if (language == null) {
       throw new IllegalStateException(
           String.format(
-              "Could not determine scriptType language from file suffix '%s'", fileExtension));
+              "Could not determine script language from file suffix '%s'", fileExtension));
     }
     return language;
   }

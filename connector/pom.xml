@@ -29,7 +29,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- scriptType languages -->
+    <!-- script languages -->
     <dependency>
       <groupId>com.samskivert</groupId>
       <artifactId>jmustache</artifactId>
@@ -85,8 +85,7 @@
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
           <shadedArtifactAttached>true</shadedArtifactAttached>
-          <useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>
-          <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
           </transformers>

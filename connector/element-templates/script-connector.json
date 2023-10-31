@@ -69,7 +69,7 @@
   }, {
     "id" : "script.language",
     "label" : "Script Language",
-    "description" : "The language the script uses",
+    "description" : "The language the script uses. By default, the ones available are: javascript, groovy, kotlin, mustache",
     "optional" : false,
     "constraints" : {
       "notEmpty" : true
@@ -88,7 +88,7 @@
   }, {
     "id" : "script.resource",
     "label" : "Script resource",
-    "description" : "The resource that should be executed",
+    "description" : "The resource that should be executed. Should be prefixed with 'classpath:' for a classpath resource, 'file:' for a file system resource. If none of these prefixes matches, it will attempt to load the provided resource as URL.",
     "optional" : false,
     "constraints" : {
       "notEmpty" : true

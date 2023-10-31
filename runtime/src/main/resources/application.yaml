@@ -1,0 +1,7 @@
+camunda:
+  connector:
+    polling:
+      enabled: false
+    webhook:
+      enabled: false
+

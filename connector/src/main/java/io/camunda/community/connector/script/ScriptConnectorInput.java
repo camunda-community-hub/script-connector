@@ -33,7 +33,10 @@ public record ScriptConnectorInput(
     record Embedded(
         @TemplateProperty(label = "Script", description = "The script to be executed") @NotNull
             String embedded,
-        @TemplateProperty(label = "Script Language", description = "The language the script uses")
+        @TemplateProperty(
+                label = "Script Language",
+                description =
+                    "The language the script uses. By default, the ones available are: javascript, groovy, kotlin, mustache")
             @NotNull
             String language)
         implements Type {}
@@ -41,7 +44,8 @@ public record ScriptConnectorInput(
     record Resource(
         @TemplateProperty(
                 label = "Script resource",
-                description = "The resource that should be executed")
+                description =
+                    "The resource that should be executed. Should be prefixed with 'classpath:' for a classpath resource, 'file:' for a file system resource. If none of these prefixes matches, it will attempt to load the provided resource as URL.")
             @NotNull
             String resource)
         implements Type {}
