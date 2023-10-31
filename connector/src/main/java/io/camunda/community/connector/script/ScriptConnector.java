@@ -7,7 +7,6 @@ import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
 import io.camunda.connector.generator.annotation.ElementTemplate;
-import java.util.Map;
 
 @OutboundConnector(
     type = ScriptConnector.SCRIPT_CONNECTOR_TYPE,
@@ -22,12 +21,27 @@ import java.util.Map;
 public class ScriptConnector implements OutboundConnectorFunction {
   public static final String SCRIPT_CONNECTOR_TYPE = "io.camunda.community:script-connector";
 
-  private final ScriptEvaluator scriptEvaluator = new ScriptEvaluator();
-  private final ScriptResourceProvider scriptResourceProvider = new ScriptResourceProvider();
-  private final LanguageProvider languageProvider = new LanguageProvider();
+  private final ScriptEvaluator scriptEvaluator;
+  private final ScriptResourceProvider scriptResourceProvider;
+  private final LanguageProvider languageProvider;
+
+  public ScriptConnector() {
+    scriptEvaluator = new ScriptEvaluator();
+    scriptResourceProvider = new ScriptResourceProvider();
+    languageProvider = new LanguageProvider();
+  }
+
+  public ScriptConnector(
+      ScriptEvaluator scriptEvaluator,
+      ScriptResourceProvider scriptResourceProvider,
+      LanguageProvider languageProvider) {
+    this.scriptEvaluator = scriptEvaluator;
+    this.scriptResourceProvider = scriptResourceProvider;
+    this.languageProvider = languageProvider;
+  }
 
   @Override
-  public Object execute(OutboundConnectorContext outboundConnectorContext) throws Exception {
+  public Object execute(OutboundConnectorContext outboundConnectorContext) {
     ScriptConnectorInput scriptConnectorInput =
         outboundConnectorContext.bindVariables(ScriptConnectorInput.class);
     String script = extractScript(scriptConnectorInput);
@@ -44,13 +58,6 @@ public class ScriptConnector implements OutboundConnectorFunction {
     } else {
       throw new IllegalStateException("No script or resource has been provided");
     }
-  }
-
-  private Object generateResponse(String resultVariable, Object evaluationResult) {
-    if (resultVariable != null && !resultVariable.isBlank()) {
-      return Map.of(resultVariable, evaluationResult);
-    }
-    return null;
   }
 
   private String extractScript(ScriptConnectorInput scriptConnectorInput) {

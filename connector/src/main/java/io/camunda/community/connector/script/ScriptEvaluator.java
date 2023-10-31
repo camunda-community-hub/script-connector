@@ -18,6 +18,7 @@ package io.camunda.community.connector.script;
 import io.camunda.community.connector.script.spi.ScriptEvaluatorExtension;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
@@ -37,6 +38,14 @@ public class ScriptEvaluator {
             e ->
                 e.getEvaluatedLanguage()
                     .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
+  }
+
+  public ScriptEvaluator(Set<ScriptEvaluatorExtension> extensions) {
+    this();
+    extensions.forEach(
+        e ->
+            e.getEvaluatedLanguage()
+                .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
   }
 
   public Object evaluate(String language, String script, Map<String, Object> variables) {
@@ -65,7 +74,8 @@ public class ScriptEvaluator {
     }
   }
 
-  private Object eval(ScriptEngine scriptEngine, String script, Map<String, Object> variables)
+  private synchronized Object eval(
+      ScriptEngine scriptEngine, String script, Map<String, Object> variables)
       throws ScriptException {
 
     final ScriptContext context = scriptEngine.getContext();
