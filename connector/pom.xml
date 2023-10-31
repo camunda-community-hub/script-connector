@@ -84,7 +84,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>
-          <finalName>${project.build.finalName}-with-script-engines</finalName>
           <shadedArtifactAttached>true</shadedArtifactAttached>
           <useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>
           <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
@@ -109,14 +108,6 @@
             <connectorClass>io.camunda.community.connector.script.ScriptConnector</connectorClass>
           </connectorClasses>
         </configuration>
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>generate-templates</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
