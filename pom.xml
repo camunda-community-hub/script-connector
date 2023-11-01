@@ -32,7 +32,7 @@
 
     <version.spring-boot>3.1.5</version.spring-boot>
     <version.camunda>8.3.0</version.camunda>
-    <version.camunda-spring>8.3.0</version.camunda-spring>
+    <version.camunda-spring>8.3.1</version.camunda-spring>
     <version.camunda-connectors>8.3.0</version.camunda-connectors>
 
     <version.groovy>2.4.21</version.groovy>
