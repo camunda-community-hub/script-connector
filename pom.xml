@@ -32,11 +32,11 @@
 
     <version.spring-boot>3.1.5</version.spring-boot>
     <version.camunda>8.3.2</version.camunda>
-    <version.camunda-spring>8.3.0</version.camunda-spring>
+    <version.camunda-spring>8.3.1</version.camunda-spring>
     <version.camunda-connectors>8.3.0</version.camunda-connectors>
 
     <version.groovy>2.4.21</version.groovy>
-    <version.kotlin>1.9.10</version.kotlin>
+    <version.kotlin>1.9.20</version.kotlin>
     <version.graalvm>23.0.2</version.graalvm>
 
     <plugin.version.function-maven-plugin>0.11.0</plugin.version.function-maven-plugin>
@@ -44,11 +44,11 @@
     <plugin.version.maven-install-plugin>3.1.1</plugin.version.maven-install-plugin>
     <plugin.version.maven-resources-plugin>3.3.1</plugin.version.maven-resources-plugin>
     <plugin.version.maven-shade-plugin>3.5.1</plugin.version.maven-shade-plugin>
-    <plugin.version.maven-surefire-plugin>3.1.2</plugin.version.maven-surefire-plugin>
+    <plugin.version.maven-surefire-plugin>3.2.2</plugin.version.maven-surefire-plugin>
     <plugin.version.spotless-maven-plugin>2.40.0</plugin.version.spotless-maven-plugin>
     <plugin.version.maven-compiler-plugin>3.11.0</plugin.version.maven-compiler-plugin>
     <plugin.version.native-maven-plugin>0.9.28</plugin.version.native-maven-plugin>
-    <plugin.version.maven-depdendency-plugin>3.6.0</plugin.version.maven-depdendency-plugin>
+    <plugin.version.maven-depdendency-plugin>3.6.1</plugin.version.maven-depdendency-plugin>
     <plugin.version.maven-site-plugin>3.12.1</plugin.version.maven-site-plugin>
     <plugin.version.maven-assembly-plugin>3.6.0</plugin.version.maven-assembly-plugin>
     <plugin.version.maven-release-plugin>3.0.1</plugin.version.maven-release-plugin>
