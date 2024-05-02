@@ -27,7 +27,7 @@ services:
       - zeebe_network
   script-connector-bundled:
     container_name: script-connector-bundled
-    image: camunda/connectors-bundle:8.5.0
+    image: camunda/connectors-bundle:8.5.1
     environment:
     - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
     - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
