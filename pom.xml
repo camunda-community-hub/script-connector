@@ -31,7 +31,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <version.spring-boot>3.3.4</version.spring-boot>
-    <version.camunda>8.5.8</version.camunda>
+    <version.camunda>8.6.1</version.camunda>
     <version.camunda-spring>8.3.7</version.camunda-spring>
     <version.camunda-connectors>8.3.0</version.camunda-connectors>
 
