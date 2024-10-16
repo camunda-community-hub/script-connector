@@ -24,16 +24,16 @@
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
     <project.build.resourceEncoding>${encoding}</project.build.resourceEncoding>
 
-    <version.java>17</version.java>
+    <version.java>21</version.java>
     <java.version>${version.java}</java.version>
 
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <version.spring-boot>3.3.4</version.spring-boot>
-    <version.camunda>8.6.1</version.camunda>
-    <version.camunda-spring>8.3.7</version.camunda-spring>
-    <version.camunda-connectors>8.3.0</version.camunda-connectors>
+    <version.camunda>8.5.8</version.camunda>
+    <version.camunda-spring>8.5.13</version.camunda-spring>
+    <version.camunda-connectors>8.6.2</version.camunda-connectors>
 
     <version.groovy>2.4.21</version.groovy>
     <version.kotlin>1.9.25</version.kotlin>
@@ -81,18 +81,30 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-bom</artifactId>
+        <version>1.65.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <groupId>io.camunda.connector</groupId>
         <artifactId>connector-core</artifactId>
         <version>${version.camunda-connectors}</version>
       </dependency>
       <dependency>
         <groupId>io.camunda.connector</groupId>
-        <artifactId>element-template-generator</artifactId>
+        <artifactId>element-template-generator-core</artifactId>
         <version>${version.camunda-connectors}</version>
       </dependency>
       <dependency>
         <groupId>io.camunda.spring</groupId>
         <artifactId>spring-boot-starter-camunda-test</artifactId>
+        <version>${version.camunda-spring}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda.spring</groupId>
+        <artifactId>spring-boot-starter-camunda</artifactId>
         <version>${version.camunda-spring}</version>
       </dependency>
       <dependency>
@@ -191,7 +203,7 @@
           <configuration>
             <image>
               <env>
-                <BP_JVM_VERSION>17</BP_JVM_VERSION>
+                <BP_JVM_VERSION>${version.java}</BP_JVM_VERSION>
                 <BPE_LANG>en_US.utf8</BPE_LANG>
               </env>
               <createdDate>${maven.build.timestamp}</createdDate>

@@ -6,7 +6,7 @@ import io.camunda.community.connector.script.ScriptConnectorInput.Type.Resource;
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
-import io.camunda.connector.generator.annotation.ElementTemplate;
+import io.camunda.connector.generator.java.annotation.ElementTemplate;
 
 @OutboundConnector(
     type = ScriptConnector.SCRIPT_CONNECTOR_TYPE,
