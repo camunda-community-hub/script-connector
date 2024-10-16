@@ -35,7 +35,7 @@
     <version.camunda-spring>8.5.13</version.camunda-spring>
     <version.camunda-connectors>8.6.2</version.camunda-connectors>
 
-    <version.groovy>2.4.21</version.groovy>
+    <version.groovy>2.5.23</version.groovy>
     <version.kotlin>1.9.25</version.kotlin>
     <version.graalvm>23.0.5</version.graalvm>
 
