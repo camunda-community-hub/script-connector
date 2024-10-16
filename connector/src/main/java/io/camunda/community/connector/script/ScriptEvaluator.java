@@ -29,7 +29,8 @@ public class ScriptEvaluator {
 
   private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
-  private final ThreadLocal<Map<String, ScriptEngine>> cachedScriptEngines = ThreadLocal.withInitial(HashMap::new);
+  private final ThreadLocal<Map<String, ScriptEngine>> cachedScriptEngines =
+      ThreadLocal.withInitial(HashMap::new);
   private final Map<String, ScriptEvaluatorExtension> scriptEvaluatorExtensions = new HashMap<>();
 
   public ScriptEvaluator() {
