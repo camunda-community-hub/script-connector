@@ -4,4 +4,7 @@ camunda:
       enabled: false
     webhook:
       enabled: false
-
+zeebe:
+  client:
+    security:
+      plaintext: true
