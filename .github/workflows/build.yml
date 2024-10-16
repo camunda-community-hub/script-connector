@@ -23,8 +23,10 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build
       run: mvn verify -PcheckFormat -Pbuild-image -B
-    - name: check docker compose
-      run: docker compose -f docker/docker-compose.yml up
+    - uses: adambirds/docker-compose-action@v1.5.0
+      name: check docker compose
+      with:
+        compose-file: "./docker/docker-compose.yml"
     - name: Publish Unit Test Results
       id: publish
       uses: EnricoMi/publish-unit-test-result-action@v2
