@@ -29,7 +29,7 @@ public class ScriptEvaluator {
 
   private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
 
-  private final Map<String, ScriptEngine> cachedScriptEngines = new HashMap<>();
+  private final ThreadLocal<Map<String, ScriptEngine>> cachedScriptEngines = ThreadLocal.withInitial(HashMap::new);
   private final Map<String, ScriptEvaluatorExtension> scriptEvaluatorExtensions = new HashMap<>();
 
   public ScriptEvaluator() {
@@ -62,7 +62,7 @@ public class ScriptEvaluator {
       String language, String script, Map<String, Object> variables) {
     try {
       final ScriptEngine scriptEngine =
-          cachedScriptEngines.computeIfAbsent(language, scriptEngineManager::getEngineByName);
+          cachedScriptEngines.get().computeIfAbsent(language, scriptEngineManager::getEngineByName);
       if (scriptEngine == null) {
         final String msg = String.format("No script engine found with name '%s'", language);
         throw new RuntimeException(msg);
