@@ -36,7 +36,8 @@
     <version.camunda-connectors>8.6.2</version.camunda-connectors>
 
     <version.groovy>4.0.23</version.groovy>
-    <version.kotlin>1.9.25</version.kotlin>
+    <version.kotlin>2.0.21</version.kotlin>
+    <kotlin.version>${version.kotlin}</kotlin.version>
     <version.graalvm>24.1.1</version.graalvm>
 
     <plugin.version.function-maven-plugin>0.11.0</plugin.version.function-maven-plugin>
@@ -83,7 +84,7 @@
       <dependency>
         <groupId>io.grpc</groupId>
         <artifactId>grpc-bom</artifactId>
-        <version>1.65.1</version>
+        <version>1.68.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
