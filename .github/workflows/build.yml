@@ -22,7 +22,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build
-      run: mvn verify -PcheckFormat -B
+      run: mvn verify -PcheckFormat -Pbuild-image -B
+    - name: check docker compose
+      run: docker compose -f docker/docker-compose.yml up
     - name: Publish Unit Test Results
       id: publish
       uses: EnricoMi/publish-unit-test-result-action@v2
