@@ -27,9 +27,10 @@ jobs:
       name: start docker compose
       with:
         compose-file: "./docker/docker-compose.yml"
-        test-command: "java -jar runtime/target/script-connector-runtime.jar"
+        test-command: "java -jar runtime/target/script-connector-runtime.jar test"
     - name: try to run connector runtime
       run: java -jar runtime/target/script-connector-runtime.jar test
+      timeout-minutes: 1
     - name: Publish Unit Test Results
       id: publish
       uses: EnricoMi/publish-unit-test-result-action@v2
