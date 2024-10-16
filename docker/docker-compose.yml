@@ -1,5 +1,3 @@
-version: "2"
-
 networks:
   zeebe_network:
     driver: bridge
@@ -15,16 +13,30 @@ services:
       - "9600:9600"
     networks:
       - zeebe_network
+    healthcheck:
+      test: [ "CMD-SHELL", "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/9600' || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
   script-connector-runtime:
     container_name: script-connector-runtime
     image: ghcr.io/camunda-community-hub/script-connector/runtime:latest
     environment:
       - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
       - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
+      - management.endpoints.web.exposure.include=health
+      - management.endpoint.health.probes.enabled=true
     depends_on:
       - zeebe
     networks:
       - zeebe_network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness" ]
+      interval: 30s
+      timeout: 1s
+      retries: 5
+      start_period: 30s
   script-connector-bundled:
     container_name: script-connector-bundled
     image: camunda/connectors-bundle:8.6.2
@@ -35,10 +47,18 @@ services:
     - CAMUNDA_CONNECTOR_WEBHOOK_ENABLED=false
     - SPRING_MAIN_WEB-APPLICATION-TYPE=none
     - OPERATE_CLIENT_ENABLED=false
+    - management.endpoints.web.exposure.include=health
+    - management.endpoint.health.probes.enabled=true
     depends_on:
     - zeebe
     networks:
     - zeebe_network
     volumes:
     - ./../connector/target/script-connector-1.2.1-SNAPSHOT-shaded.jar:/opt/custom/script-connector.jar
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness" ]
+      interval: 30s
+      timeout: 1s
+      retries: 5
+      start_period: 30s
 

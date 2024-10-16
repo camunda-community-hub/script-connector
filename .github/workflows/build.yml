@@ -24,9 +24,12 @@ jobs:
     - name: Build
       run: mvn verify -PcheckFormat -Pbuild-image -B
     - uses: adambirds/docker-compose-action@v1.5.0
-      name: check docker compose
+      name: start docker compose
       with:
         compose-file: "./docker/docker-compose.yml"
+        test-command: "java -jar runtime/target/script-connector-runtime.jar"
+    - name: try to run connector runtime
+      run: java -jar runtime/target/script-connector-runtime.jar
     - name: Publish Unit Test Results
       id: publish
       uses: EnricoMi/publish-unit-test-result-action@v2
