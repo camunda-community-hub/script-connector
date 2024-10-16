@@ -47,6 +47,10 @@ jobs:
         maven-auto-release-after-close: true
         github-token: ${{ secrets.GITHUB_TOKEN }}
       id: release
+    - name: Build docker image
+      run: mvn clean package -DskipTests -Pbuild-image
+    - name: Push docker images
+      run: docker push -a -q ghcr.io/camunda-community-hub/script-connector/runtime
     - if: github.event.release
       name: Attach artifacts to GitHub Release (Release only)
       uses: actions/upload-release-asset@v1
