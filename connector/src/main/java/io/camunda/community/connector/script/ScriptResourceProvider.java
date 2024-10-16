@@ -2,6 +2,7 @@ package io.camunda.community.connector.script;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.function.Function;
@@ -60,7 +61,7 @@ public class ScriptResourceProvider {
 
   private String loadFromUrl(String scriptResource) {
     try {
-      URL scriptUrl = new URL(scriptResource);
+      URL scriptUrl = URI.create(scriptResource).toURL();
       try (InputStream in = scriptUrl.openStream()) {
         return new String(in.readAllBytes());
       }
