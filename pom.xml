@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <name>Script Connector Parent</name>
@@ -10,7 +8,7 @@
   </modules>
   <groupId>io.camunda.connectors.community</groupId>
   <artifactId>script-connector-parent</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
@@ -245,7 +243,7 @@
               <!--
                 <dependencyConvergence />
               -->
-              <requirePluginVersions/>
+              <requirePluginVersions />
             </rules>
           </configuration>
           <executions>
@@ -267,8 +265,8 @@
                   <include>*.md</include>
                   <include>.gitignore</include>
                 </includes>
-                <trimTrailingWhitespace/>
-                <endWithNewline/>
+                <trimTrailingWhitespace />
+                <endWithNewline />
                 <indent>
                   <spaces>true</spaces>
                   <spacesPerTab>2</spacesPerTab>
@@ -276,9 +274,9 @@
               </format>
             </formats>
             <java>
-              <googleJavaFormat/>
+              <googleJavaFormat />
             </java>
-            <pom/>
+            <pom />
           </configuration>
         </plugin>
         <plugin>
@@ -313,7 +311,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
               </pluginExecutions>
