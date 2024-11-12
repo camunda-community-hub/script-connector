@@ -78,7 +78,7 @@
               <execution>
                 <id>build-latest</id>
                 <goals>
-                  <goal>build-image</goal>
+                  <goal>build-image-no-fork</goal>
                 </goals>
                 <phase>package</phase>
                 <configuration>
