@@ -30,7 +30,7 @@
 
     <version.spring-boot>3.4.1</version.spring-boot>
     <version.camunda>8.5.8</version.camunda>
-    <version.camunda-spring>8.5.13</version.camunda-spring>
+    <version.camunda-spring>8.5.16</version.camunda-spring>
     <version.camunda-connectors>8.6.6</version.camunda-connectors>
 
     <version.groovy>4.0.24</version.groovy>
