@@ -1,5 +1,6 @@
 package io.camunda.community.connector.script.spi;
 
+import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -13,5 +14,5 @@ public interface ScriptEvaluatorExtension {
 
   Set<String> getEvaluatedLanguage();
 
-  Object evaluateScript(String script, Map<String, Object> context);
+  Object evaluateScript(ScriptType script, Map<String, Object> context);
 }

@@ -15,9 +15,9 @@
  */
 package io.camunda.community.connector.script;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
+import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -27,21 +27,24 @@ public class ScriptEvaluatorTest {
 
   @Test
   public void shouldEvaluateJavaScript() {
-    final Object result = scriptEvaluator.evaluate("javascript", "123", Collections.emptyMap());
+    final Object result =
+        scriptEvaluator.evaluate(new Embedded("123", "javascript"), Collections.emptyMap());
 
     assertThat(result).isEqualTo(123);
   }
 
   @Test
   public void shouldEvaluateGroovy() {
-    final Object result = scriptEvaluator.evaluate("groovy", "123", Collections.emptyMap());
+    final Object result =
+        scriptEvaluator.evaluate(new Embedded("123", "groovy"), Collections.emptyMap());
 
     assertThat(result).isEqualTo(123);
   }
 
   @Test
   public void shouldEvaluateKotlin() {
-    final Object result = scriptEvaluator.evaluate("kotlin", "123", Collections.emptyMap());
+    final Object result =
+        scriptEvaluator.evaluate(new Embedded("123", "kotlin"), Collections.emptyMap());
 
     assertThat(result).isEqualTo(123);
   }
@@ -50,7 +53,8 @@ public class ScriptEvaluatorTest {
   public void shouldEvaluateJavaScriptWithVariables() {
 
     final Object result =
-        scriptEvaluator.evaluate("javascript", "a", Collections.singletonMap("a", 123));
+        scriptEvaluator.evaluate(
+            new Embedded("a", "javascript"), Collections.singletonMap("a", 123));
 
     assertThat(result).isEqualTo(123);
   }
@@ -59,7 +63,7 @@ public class ScriptEvaluatorTest {
   public void shouldEvaluateGroovyWithVariables() {
 
     final Object result =
-        scriptEvaluator.evaluate("groovy", "a", Collections.singletonMap("a", 123));
+        scriptEvaluator.evaluate(new Embedded("a", "groovy"), Collections.singletonMap("a", 123));
 
     assertThat(result).isEqualTo(123);
   }
@@ -67,20 +71,23 @@ public class ScriptEvaluatorTest {
   @Test
   public void shouldEvaluateKotlinWithVariables() {
     final Object result =
-        scriptEvaluator.evaluate("kotlin", "a", Collections.singletonMap("a", 123));
+        scriptEvaluator.evaluate(new Embedded("a", "kotlin"), Collections.singletonMap("a", 123));
 
     assertThat(result).isEqualTo(123);
   }
 
   @Test
   public void shouldThrowExceptionIfScriptEngineNotFound() {
-    assertThatThrownBy(() -> scriptEvaluator.evaluate("foobar", "", Collections.emptyMap()))
+    assertThatThrownBy(
+            () -> scriptEvaluator.evaluate(new Embedded("", "foobar"), Collections.emptyMap()))
         .hasCause(new RuntimeException("No script engine found with name 'foobar'"));
   }
 
   @Test
   public void shouldThrowExceptionIfScriptEvaluationFails() {
-    assertThatThrownBy(() -> scriptEvaluator.evaluate("javascript", "???", Collections.emptyMap()))
+    assertThatThrownBy(
+            () ->
+                scriptEvaluator.evaluate(new Embedded("???", "javascript"), Collections.emptyMap()))
         .hasMessage("Failed to evaluate script '???' (javascript)");
   }
 }
