@@ -19,15 +19,13 @@ public class ScriptConnector implements OutboundConnectorFunction {
   public static final String SCRIPT_CONNECTOR_TYPE = "io.camunda.community:script-connector";
 
   private final ScriptEvaluator scriptEvaluator;
-  private final LanguageProvider languageProvider;
 
   public ScriptConnector() {
-    this(new ScriptEvaluator(), new LanguageProvider());
+    this(new ScriptEvaluator());
   }
 
-  public ScriptConnector(ScriptEvaluator scriptEvaluator, LanguageProvider languageProvider) {
+  public ScriptConnector(ScriptEvaluator scriptEvaluator) {
     this.scriptEvaluator = scriptEvaluator;
-    this.languageProvider = languageProvider;
   }
 
   @Override
