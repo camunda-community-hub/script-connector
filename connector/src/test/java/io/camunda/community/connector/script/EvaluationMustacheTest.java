@@ -17,6 +17,7 @@ package io.camunda.community.connector.script;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,8 @@ public class EvaluationMustacheTest {
   public void shouldReplaceStringVariables() {
 
     final Object result =
-        scriptEvaluator.evaluate("mustache", "{{x}} and {{y}}", Map.of("x", "a", "y", "b"));
+        scriptEvaluator.evaluate(
+            new Embedded("{{x}} and {{y}}", "mustache"), Map.of("x", "a", "y", "b"));
 
     assertThat(result).isEqualTo("a and b");
   }
@@ -38,7 +40,8 @@ public class EvaluationMustacheTest {
   public void shouldReplaceNumericVariables() {
 
     final Object result =
-        scriptEvaluator.evaluate("mustache", "{{x}} and {{y}}", Map.of("x", "1", "y", "2"));
+        scriptEvaluator.evaluate(
+            new Embedded("{{x}} and {{y}}", "mustache"), Map.of("x", "1", "y", "2"));
 
     assertThat(result).isEqualTo("1 and 2");
   }
@@ -47,7 +50,7 @@ public class EvaluationMustacheTest {
   public void shouldReplaceListVariables() {
 
     final Object result =
-        scriptEvaluator.evaluate("mustache", "{{x}}", Map.of("x", List.of(1, 2, 3)));
+        scriptEvaluator.evaluate(new Embedded("{{x}}", "mustache"), Map.of("x", List.of(1, 2, 3)));
 
     assertThat(result).isEqualTo("[1, 2, 3]");
   }
@@ -56,7 +59,7 @@ public class EvaluationMustacheTest {
   public void shouldReplaceObjectVariables() {
 
     final Object result =
-        scriptEvaluator.evaluate("mustache", "{{x.y}}", Map.of("x", Map.of("y", 1)));
+        scriptEvaluator.evaluate(new Embedded("{{x.y}}", "mustache"), Map.of("x", Map.of("y", 1)));
 
     assertThat(result).isEqualTo("1");
   }
@@ -65,7 +68,8 @@ public class EvaluationMustacheTest {
   public void shouldIterateOverListVariable() {
 
     final Object result =
-        scriptEvaluator.evaluate("mustache", "{{#x}}i:{{.}} {{/x}}", Map.of("x", List.of(1, 2, 3)));
+        scriptEvaluator.evaluate(
+            new Embedded("{{#x}}i:{{.}} {{/x}}", "mustache"), Map.of("x", List.of(1, 2, 3)));
 
     assertThat(result).isEqualTo("i:1 i:2 i:3 ");
   }
