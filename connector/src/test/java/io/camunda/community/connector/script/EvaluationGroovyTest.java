@@ -18,6 +18,7 @@ package io.camunda.community.connector.script;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
+import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class EvaluationGroovyTest {
   public void shouldReturnNumber() {
 
     final Object result =
-        scriptEvaluator.evaluate("groovy", "x * 2", Collections.singletonMap("x", 2));
+        scriptEvaluator.evaluate(new Embedded("x * 2", "groovy"), Collections.singletonMap("x", 2));
 
     assertThat(result).isEqualTo(4);
   }
@@ -40,7 +41,8 @@ public class EvaluationGroovyTest {
   public void shouldReturnString() {
 
     final Object result =
-        scriptEvaluator.evaluate("groovy", "'url?id=' + id", Collections.singletonMap("id", "123"));
+        scriptEvaluator.evaluate(
+            new Embedded("'url?id=' + id", "groovy"), Collections.singletonMap("id", "123"));
 
     assertThat(result).isEqualTo("url?id=123");
   }
@@ -50,7 +52,8 @@ public class EvaluationGroovyTest {
     @SuppressWarnings("unchecked")
     final List<Object> result =
         (List<Object>)
-            scriptEvaluator.evaluate("groovy", "[1,2,3]", Collections.singletonMap("x", 3));
+            scriptEvaluator.evaluate(
+                new Embedded("[1,2,3]", "groovy"), Collections.singletonMap("x", 3));
 
     assertThat(result).hasSize(3).contains(1, 2, 3);
   }
@@ -61,7 +64,8 @@ public class EvaluationGroovyTest {
     final Map<String, Object> result =
         (Map<String, Object>)
             scriptEvaluator.evaluate(
-                "groovy", "[foo:foo,bar:'bar']", Collections.singletonMap("foo", 123));
+                new Embedded("[foo:foo,bar:'bar']", "groovy"),
+                Collections.singletonMap("foo", 123));
 
     assertThat(result).hasSize(2).contains(entry("foo", 123), entry("bar", "bar"));
   }
@@ -71,7 +75,8 @@ public class EvaluationGroovyTest {
 
     final Object result =
         scriptEvaluator.evaluate(
-            "groovy", "\"url?id=${id}\".toString()", Collections.singletonMap("id", 123));
+            new Embedded("\"url?id=${id}\".toString()", "groovy"),
+            Collections.singletonMap("id", 123));
 
     assertThat(result).isEqualTo("url?id=123");
   }
