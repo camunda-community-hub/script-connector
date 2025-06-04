@@ -34,7 +34,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Deploy SNAPSHOT / Release
-      uses: camunda-community-hub/community-action-maven-release@v1
+      uses: camunda-community-hub/community-action-maven-release@v2
       with:
         maven-additional-options: -P!autoFormat
         release-version: ${{ github.event.release.tag_name }}
