@@ -34,7 +34,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Deploy SNAPSHOT / Release
-      uses: camunda-community-hub/community-action-maven-release@v1
+      uses: camunda-community-hub/community-action-maven-release@v2
       with:
         maven-additional-options: -P!autoFormat
         release-version: ${{ github.event.release.tag_name }}
@@ -43,6 +43,8 @@ jobs:
         maven-usr: ${{ secrets.COMMUNITY_HUB_MAVEN_CENTRAL_S01_USR }}
         maven-psw: ${{ secrets.COMMUNITY_HUB_MAVEN_CENTRAL_S01_PSW }}
         maven-url: s01.oss.sonatype.org
+        central-sonatype-usr: ${{ secrets.COMMUNITY_HUB_MAVEN_CENTRAL_CP_USR }}
+        central-sonatype-psw: ${{ secrets.COMMUNITY_HUB_MAVEN_CENTRAL_CP_PSW }}
         maven-gpg-passphrase: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_PASSPHRASE }}
         maven-auto-release-after-close: true
         github-token: ${{ secrets.GITHUB_TOKEN }}
