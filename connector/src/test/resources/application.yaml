@@ -1,4 +1,6 @@
-camunda.operate.enabled: false
+operate:
+  client:
+    enabled: false
 camunda:
   connector:
     webhook:

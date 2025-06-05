@@ -30,8 +30,7 @@
 
     <version.spring-boot>3.5.0</version.spring-boot>
     <version.camunda>8.7.4</version.camunda>
-    <version.camunda-spring>8.5.18</version.camunda-spring>
-    <version.camunda-connectors>8.6.10</version.camunda-connectors>
+    <version.camunda-connectors>8.7.2</version.camunda-connectors>
 
     <version.groovy>4.0.27</version.groovy>
     <version.kotlin>2.1.21</version.kotlin>
@@ -97,14 +96,9 @@
         <version>${version.camunda-connectors}</version>
       </dependency>
       <dependency>
-        <groupId>io.camunda.spring</groupId>
+        <groupId>io.camunda</groupId>
         <artifactId>spring-boot-starter-camunda-test</artifactId>
-        <version>${version.camunda-spring}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.camunda.spring</groupId>
-        <artifactId>spring-boot-starter-camunda</artifactId>
-        <version>${version.camunda-spring}</version>
+        <version>${version.camunda}</version>
       </dependency>
       <dependency>
         <groupId>io.camunda.connector</groupId>
