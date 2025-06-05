@@ -106,10 +106,19 @@
       <plugin>
         <groupId>io.camunda.connector</groupId>
         <artifactId>element-template-generator-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-templates</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
-          <connectorClasses>
-            <connectorClass>io.camunda.community.connector.script.ScriptConnector</connectorClass>
-          </connectorClasses>
+          <connectors>
+            <connector>
+              <connectorClass>io.camunda.community.connector.script.ScriptConnector</connectorClass>
+            </connector>
+          </connectors>
         </configuration>
       </plugin>
     </plugins>

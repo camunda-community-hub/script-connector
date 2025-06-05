@@ -3,6 +3,9 @@
   "name" : "Script Connector",
   "id" : "io.camunda.community:script-connector",
   "description" : "A connector to execute a script",
+  "metadata" : {
+    "keywords" : [ ]
+  },
   "version" : 1,
   "category" : {
     "id" : "connectors",
@@ -28,15 +31,16 @@
   "properties" : [ {
     "value" : "io.camunda.community:script-connector",
     "binding" : {
-      "type" : "zeebe:taskDefinition:type"
+      "property" : "type",
+      "type" : "zeebe:taskDefinition"
     },
     "type" : "Hidden"
   }, {
-    "id" : "script.type",
-    "label" : "Type",
+    "id" : "script.scripttype",
+    "label" : "Script type",
     "group" : "default",
     "binding" : {
-      "name" : "script.type",
+      "name" : "script.scripttype",
       "type" : "zeebe:input"
     },
     "type" : "Dropdown",
@@ -62,8 +66,9 @@
       "type" : "zeebe:input"
     },
     "condition" : {
-      "property" : "script.type",
-      "equals" : "embedded"
+      "property" : "script.scripttype",
+      "equals" : "embedded",
+      "type" : "simple"
     },
     "type" : "String"
   }, {
@@ -81,8 +86,9 @@
       "type" : "zeebe:input"
     },
     "condition" : {
-      "property" : "script.type",
-      "equals" : "embedded"
+      "property" : "script.scripttype",
+      "equals" : "embedded",
+      "type" : "simple"
     },
     "type" : "String"
   }, {
@@ -100,8 +106,9 @@
       "type" : "zeebe:input"
     },
     "condition" : {
-      "property" : "script.type",
-      "equals" : "resource"
+      "property" : "script.scripttype",
+      "equals" : "resource",
+      "type" : "simple"
     },
     "type" : "String"
   }, {
@@ -149,6 +156,18 @@
     },
     "type" : "Text"
   }, {
+    "id" : "retryCount",
+    "label" : "Retries",
+    "description" : "Number of retries",
+    "value" : "3",
+    "feel" : "optional",
+    "group" : "retries",
+    "binding" : {
+      "property" : "retries",
+      "type" : "zeebe:taskDefinition"
+    },
+    "type" : "String"
+  }, {
     "id" : "retryBackoff",
     "label" : "Retry backoff",
     "description" : "ISO-8601 duration to wait between retries",
@@ -158,6 +177,6 @@
       "key" : "retryBackoff",
       "type" : "zeebe:taskHeader"
     },
-    "type" : "Hidden"
+    "type" : "String"
   } ]
 }
