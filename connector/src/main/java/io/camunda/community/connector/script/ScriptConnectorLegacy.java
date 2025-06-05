@@ -2,6 +2,7 @@ package io.camunda.community.connector.script;
 
 import static java.util.Optional.*;
 
+import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
@@ -28,7 +29,7 @@ public class ScriptConnectorLegacy implements OutboundConnectorFunction {
 
     final Map<String, Object> variables = getVariablesAsMap(outboundConnectorContext);
 
-    return scriptEvaluator.evaluate(language, script, variables);
+    return scriptEvaluator.evaluate(new Embedded(script, language), variables);
   }
 
   private String getLanguage(Map<String, String> customHeaders) {
