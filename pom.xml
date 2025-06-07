@@ -29,7 +29,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <version.spring-boot>3.5.0</version.spring-boot>
-    <version.camunda>8.7.4</version.camunda>
+    <version.camunda>8.7.5</version.camunda>
     <version.camunda-connectors>8.7.2</version.camunda-connectors>
 
     <version.groovy>4.0.27</version.groovy>
