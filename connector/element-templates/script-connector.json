@@ -29,7 +29,7 @@
     "label" : "Retries"
   } ],
   "properties" : [ {
-    "value" : "io.camunda.community:script-connector",
+    "value" : "io.camunda.community:script-connector:1",
     "binding" : {
       "property" : "type",
       "type" : "zeebe:taskDefinition"

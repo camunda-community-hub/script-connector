@@ -10,13 +10,16 @@ import io.camunda.connector.generator.java.annotation.ElementTemplate;
     name = "script-connector",
     inputVariables = {"script", "context"})
 @ElementTemplate(
-    id = ScriptConnector.SCRIPT_CONNECTOR_TYPE,
+    id = ScriptConnector.SCRIPT_CONNECTOR_ID,
     name = "Script Connector",
     version = 1,
     inputDataClass = ScriptConnectorInput.class,
     description = "A connector to execute a script")
 public class ScriptConnector implements OutboundConnectorFunction {
-  public static final String SCRIPT_CONNECTOR_TYPE = "io.camunda.community:script-connector";
+  public static final String SCRIPT_CONNECTOR_ID = "io.camunda.community:script-connector";
+  public static final int SCRIPT_CONNECTOR_VERSION = 1;
+  public static final String SCRIPT_CONNECTOR_TYPE =
+      SCRIPT_CONNECTOR_ID + ":" + SCRIPT_CONNECTOR_VERSION;
 
   private final ScriptEvaluator scriptEvaluator;
 
