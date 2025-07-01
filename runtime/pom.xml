@@ -6,10 +6,8 @@
     <artifactId>script-connector-parent</artifactId>
     <version>2.0.2-SNAPSHOT</version>
   </parent>
-
   <artifactId>script-connector-runtime</artifactId>
   <name>Script Connector Runtime</name>
-
   <dependencies>
     <dependency>
       <groupId>io.camunda.connectors.community</groupId>
@@ -31,13 +29,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <!-- Needs to unpack this dependency.
            See: https://github.com/sdeleuze/kotlin-script-templating/issues/7#issuecomment-364572513
@@ -49,10 +40,16 @@
             </dependency>
           </requiresUnpack>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>build-image</id>
@@ -70,8 +67,7 @@
                 <phase>package</phase>
                 <configuration>
                   <image>
-                    <name>ghcr.io/camunda-community-hub/script-connector/runtime:${project.version}
-                    </name>
+                    <name>ghcr.io/camunda-community-hub/script-connector/runtime:${project.version}</name>
                   </image>
                 </configuration>
               </execution>
@@ -93,5 +89,4 @@
       </build>
     </profile>
   </profiles>
-
 </project>
