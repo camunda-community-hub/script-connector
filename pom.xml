@@ -1,42 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.camunda.community</groupId>
+    <artifactId>community-hub-release-parent</artifactId>
+    <version>2.1.0</version>
+  </parent>
+  <groupId>io.camunda.connectors.community</groupId>
+  <artifactId>script-connector-parent</artifactId>
+  <version>2.0.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
   <name>Script Connector Parent</name>
   <modules>
     <module>connector</module>
     <module>runtime</module>
   </modules>
-  <groupId>io.camunda.connectors.community</groupId>
-  <artifactId>script-connector-parent</artifactId>
-  <version>2.0.2-SNAPSHOT</version>
-  <packaging>pom</packaging>
-
-  <parent>
-    <groupId>org.camunda.community</groupId>
-    <artifactId>community-hub-release-parent</artifactId>
-    <version>2.0.3</version>
-  </parent>
-
   <properties>
     <encoding>UTF-8</encoding>
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
     <project.build.resourceEncoding>${encoding}</project.build.resourceEncoding>
-
     <version.java>21</version.java>
     <java.version>${version.java}</java.version>
-
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-
     <version.spring-boot>3.5.3</version.spring-boot>
     <version.camunda>8.7.6</version.camunda>
     <version.camunda-connectors>8.7.4</version.camunda-connectors>
-
     <version.groovy>4.0.27</version.groovy>
     <version.kotlin>2.2.0</version.kotlin>
     <kotlin.version>${version.kotlin}</kotlin.version>
     <version.graalvm>24.2.1</version.graalvm>
-
     <plugin.version.function-maven-plugin>0.11.1</plugin.version.function-maven-plugin>
     <plugin.version.maven-enforcer-plugin>3.5.0</plugin.version.maven-enforcer-plugin>
     <plugin.version.maven-install-plugin>3.1.4</plugin.version.maven-install-plugin>
@@ -54,15 +47,14 @@
     <plugin.version.maven-source-plugin>3.3.1</plugin.version.maven-source-plugin>
     <plugin.version.maven-jar-plugin>3.3.0</plugin.version.maven-jar-plugin>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>io.camunda</groupId>
         <artifactId>zeebe-bom</artifactId>
         <version>${version.camunda}</version>
-        <scope>import</scope>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
@@ -139,7 +131,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -270,7 +261,19 @@
             <java>
               <googleJavaFormat />
             </java>
-            <pom />
+            <pom>
+              <sortPom>
+                <nrOfIndentSpace>2</nrOfIndentSpace>
+                <expandEmptyElements>false</expandEmptyElements>
+                <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
+                <keepBlankLines>false</keepBlankLines>
+              </sortPom>
+            </pom>
+            <markdown>
+              <includes>
+                <include>**/*.md</include>
+              </includes>
+            </markdown>
           </configuration>
         </plugin>
         <plugin>
@@ -315,7 +318,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
   <profiles>
     <!-- profile to auto format -->
     <profile>
@@ -341,7 +343,6 @@
         </plugins>
       </build>
     </profile>
-
     <!-- profile to perform strict validation checks -->
     <profile>
       <id>checkFormat</id>

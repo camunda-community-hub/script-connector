@@ -1,15 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-  <name>Script Connector</name>
-  <artifactId>script-connector</artifactId>
-
   <parent>
     <groupId>io.camunda.connectors.community</groupId>
     <artifactId>script-connector-parent</artifactId>
     <version>2.0.2-SNAPSHOT</version>
   </parent>
-
+  <artifactId>script-connector</artifactId>
+  <name>Script Connector</name>
   <dependencies>
     <dependency>
       <groupId>io.camunda.connector</groupId>
@@ -26,7 +24,6 @@
       <artifactId>jackson-databind</artifactId>
       <scope>provided</scope>
     </dependency>
-
     <!-- script languages -->
     <dependency>
       <groupId>com.samskivert</groupId>
@@ -81,7 +78,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -96,23 +92,16 @@
         </configuration>
         <executions>
           <execution>
-            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
+            <phase>package</phase>
           </execution>
         </executions>
       </plugin>
       <plugin>
         <groupId>io.camunda.connector</groupId>
         <artifactId>element-template-generator-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate-templates</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <connectors>
             <connector>
@@ -120,6 +109,13 @@
             </connector>
           </connectors>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-templates</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
