@@ -225,9 +225,8 @@
           <version>${plugin.version.maven-enforcer-plugin}</version>
           <configuration>
             <rules>
-              <!--
-                <dependencyConvergence />
-              -->
+              <reactorModuleConvergence />
+              <dependencyConvergence />
               <requirePluginVersions />
             </rules>
           </configuration>

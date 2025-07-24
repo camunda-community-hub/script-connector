@@ -45,7 +45,7 @@ The connector provides an [element template](./connector/element-templates/scrip
 ### Script languages
 
 Available script languages are by default:
-* [javascript](https://www.graalvm.org/) (GraalVM JS) [Note: Consider using the [Camunda 8 JavaScript SDK for Node.js](https://docs.camunda.io/docs/apis-tools/node-js-sdk/) instead.] 
+* [javascript](https://www.graalvm.org/) (GraalVM JS) [Note: Consider using the [Camunda 8 JavaScript SDK for Node.js](https://docs.camunda.io/docs/apis-tools/node-js-sdk/) instead.]
 * [groovy](http://groovy-lang.org/)
 * [mustache](http://mustache.github.io/mustache.5.html)
 * [kotlin](https://kotlinlang.org/)
