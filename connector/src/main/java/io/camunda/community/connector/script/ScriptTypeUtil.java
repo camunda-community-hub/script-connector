@@ -1,17 +1,17 @@
 package io.camunda.community.connector.script;
 
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType;
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Resource;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Embedded;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Resource;
 
 public class ScriptTypeUtil {
 
-  public static String extractScript(ScriptType script) {
+  public static String extractScript(Type script) {
     return extractScript(script, new ScriptResourceProvider());
   }
 
   public static String extractScript(
-      ScriptType script, ScriptResourceProvider scriptResourceProvider) {
+      Type script, ScriptResourceProvider scriptResourceProvider) {
     if (script instanceof Embedded e) {
       return e.embedded();
     } else if (script instanceof Resource(String resource)) {
@@ -21,11 +21,11 @@ public class ScriptTypeUtil {
     }
   }
 
-  public static String extractLanguage(ScriptType script) {
+  public static String extractLanguage(Type script) {
     return extractLanguage(script, new LanguageProvider());
   }
 
-  public static String extractLanguage(ScriptType script, LanguageProvider languageProvider) {
+  public static String extractLanguage(Type script, LanguageProvider languageProvider) {
     if (script instanceof Embedded e) {
       return e.language();
     } else if (script instanceof Resource(String resource)) {

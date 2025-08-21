@@ -15,7 +15,7 @@
  */
 package io.camunda.community.connector.script;
 
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type;
 import io.camunda.community.connector.script.spi.ScriptEvaluatorExtension;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class ScriptEvaluator {
                 .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
   }
 
-  public Object evaluate(ScriptType script, Map<String, Object> variables) {
+  public Object evaluate(Type script, Map<String, Object> variables) {
     String language = ScriptTypeUtil.extractLanguage(script);
     if (scriptEvaluatorExtensions.containsKey(language)) {
       final var scriptEvaluator = scriptEvaluatorExtensions.get(language);

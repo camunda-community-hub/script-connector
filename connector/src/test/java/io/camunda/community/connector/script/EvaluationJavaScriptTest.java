@@ -17,7 +17,7 @@ package io.camunda.community.connector.script;
 
 import static org.assertj.core.api.Assertions.*;
 
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Embedded;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
