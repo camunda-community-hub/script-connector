@@ -7,10 +7,18 @@ services:
     container_name: zeebe
     image: camunda/zeebe:8.7.10
     environment:
-      - ZEEBE_LOG_LEVEL=debug
+    # allow running with low disk space
+    - ZEEBE_BROKER_DATA_DISKUSAGECOMMANDWATERMARK=0.998
+    - ZEEBE_BROKER_DATA_DISKUSAGEREPLICATIONWATERMARK=0.999
+    - CAMUNDA_DATABASE_URL=http://elasticsearch:9200
+    - "JAVA_TOOL_OPTIONS=-Xms512m -Xmx512m"
+    - ZEEBE_BROKER_EXPORTERS_DEBUGLOG_CLASSNAME=io.camunda.zeebe.broker.exporter.debug.DebugLogExporter
+    - ZEEBE_BROKER_EXPORTERS_DEBUGLOG_ARGS_LOGLEVEL=INFO
+    - ZEEBE_BROKER_EXPORTERS_DEBUGLOG_ARGS_PRETTYPRINT=true
     ports:
       - "26500:26500"
       - "9600:9600"
+      - "8088:8080"
     networks:
       - zeebe_network
     healthcheck:
@@ -19,12 +27,13 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    volumes:
+    - zeebe:/usr/local/zeebe/data
   script-connector-runtime:
     container_name: script-connector-runtime
     image: ghcr.io/camunda-community-hub/script-connector/runtime:latest
     environment:
-      - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
-      - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
+      - CAMUNDA_CLIENT_ZEEBE_GRPCADDRESS=http://zeebe:26500
       - management.endpoints.web.exposure.include=health
       - management.endpoint.health.probes.enabled=true
     depends_on:
@@ -41,8 +50,7 @@ services:
     container_name: script-connector-bundled
     image: camunda/connectors-bundle:8.7.7
     environment:
-    - ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS=zeebe:26500
-    - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
+    - CAMUNDA_CLIENT_ZEEBE_GRPCADDRESS=http://zeebe:26500
     - CAMUNDA_CONNECTOR_POLLING_ENABLED=false
     - CAMUNDA_CONNECTOR_WEBHOOK_ENABLED=false
     - SPRING_MAIN_WEB-APPLICATION-TYPE=none
@@ -54,11 +62,12 @@ services:
     networks:
     - zeebe_network
     volumes:
-    - ./../connector/target/script-connector-1.2.1-SNAPSHOT-shaded.jar:/opt/custom/script-connector.jar
+    - ./../connector/target/script-connector-2.0.2-SNAPSHOT-shaded.jar:/opt/custom/script-connector.jar
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness" ]
       interval: 30s
       timeout: 1s
       retries: 5
       start_period: 30s
-
+volumes:
+  zeebe:
