@@ -17,7 +17,7 @@ package io.camunda.community.connector.script;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Embedded;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

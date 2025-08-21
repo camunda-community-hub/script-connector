@@ -2,7 +2,7 @@ package io.camunda.community.connector.script;
 
 import static java.util.Optional.*;
 
-import io.camunda.community.connector.script.ScriptConnectorInput.ScriptType.Embedded;
+import io.camunda.community.connector.script.ScriptConnectorInput.Type.Embedded;
 import io.camunda.connector.api.annotation.OutboundConnector;
 import io.camunda.connector.api.outbound.OutboundConnectorContext;
 import io.camunda.connector.api.outbound.OutboundConnectorFunction;
