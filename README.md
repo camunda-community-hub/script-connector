@@ -11,6 +11,24 @@ A connector to evaluate scripts (i.e. script tasks) that are not written in FEEL
 
 ## Usage
 
+### Connector
+
+The connector provides an [element template](./connector/element-templates/script-connector.json) that can be used to configure it.
+
+### Script languages
+
+Available script languages are by default:
+* [javascript](https://www.graalvm.org/) (GraalVM JS) [Note: Consider using the [Camunda 8 JavaScript SDK for Node.js](https://docs.camunda.io/docs/apis-tools/node-js-sdk/) instead.]
+* [groovy](http://groovy-lang.org/)
+* [mustache](http://mustache.github.io/mustache.5.html)
+* [kotlin](https://kotlinlang.org/)
+
+To register new script languages, you can use the `ScriptEngineFactory` to register any JSR-223 compliant script engine.
+
+If you want to provide a non-compliant implementation, you can use the [`ScriptEvaluatorExtension`](./connector/src/main/java/io/camunda/community/connector/script/spi/ScriptEvaluatorExtension.java) SPI.
+
+To register custom file extensions, you can use the [`LanguageProviderExtension`](./connector/src/main/java/io/camunda/community/connector/script/spi/LanguageProviderExtension.java) SPI.
+
 ### Legacy
 
 The legacy connector provides compatibility with the previous implementation `zeebe-script-worker`.
@@ -38,24 +56,6 @@ Example BPMN with service task:
   * `script` - the script to evaluate
   * `resultVariable` - the result of the evaluation is passed to this variable
 
-### Connector
-
-The connector provides an [element template](./connector/element-templates/script-connector.json) that can be used to configure it.
-
-### Script languages
-
-Available script languages are by default:
-* [javascript](https://www.graalvm.org/) (GraalVM JS) [Note: Consider using the [Camunda 8 JavaScript SDK for Node.js](https://docs.camunda.io/docs/apis-tools/node-js-sdk/) instead.]
-* [groovy](http://groovy-lang.org/)
-* [mustache](http://mustache.github.io/mustache.5.html)
-* [kotlin](https://kotlinlang.org/)
-
-To register new script languages, you can use the `ScriptEngineFactory` to register any JSR-223 compliant script engine.
-
-If you want to provide a non-compliant implementation, you can use the [`ScriptEvaluatorExtension`](./connector/src/main/java/io/camunda/community/connector/script/spi/ScriptEvaluatorExtension.java) SPI.
-
-To register custom file extensions, you can use the [`LanguageProviderExtension`](./connector/src/main/java/io/camunda/community/connector/script/spi/LanguageProviderExtension.java) SPI.
-
 ## Install
 
 ### Docker
@@ -76,7 +76,7 @@ The docker image for the connector runtime is published as GitHub package.
 docker pull ghcr.io/camunda-community-hub/script-connector/runtime:latest
 ```
 
-Configure the connection to the Zeebe broker by setting the environment property `ZEEBE_CLIENT_BROKER_GATEWAY-ADDRESS` (default: `localhost:26500`)
+Configure the connection to the Zeebe broker by setting the environment property `CAMUNDA_CLIENT_ZEEBE_GRPCADDRESS` (default: `localhost:26500`)
 
 The docker-compose file shows an example how this works.
 
