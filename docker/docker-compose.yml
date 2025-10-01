@@ -5,7 +5,7 @@ networks:
 services:
   zeebe:
     container_name: zeebe
-    image: camunda/zeebe:8.7.13
+    image: camunda/zeebe:8.7.14
     environment:
     # allow running with low disk space
     - ZEEBE_BROKER_DATA_DISKUSAGECOMMANDWATERMARK=0.998
