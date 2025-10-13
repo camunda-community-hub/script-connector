@@ -3,11 +3,11 @@ package io.camunda.community.connector.script;
 import static io.camunda.community.connector.script.ScriptConnector.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.camunda.zeebe.client.ZeebeClient;
-import io.camunda.zeebe.client.api.response.ProcessInstanceResult;
+import io.camunda.client.CamundaClient;
+import io.camunda.process.test.api.CamundaSpringProcessTest;
+import io.camunda.client.api.response.ProcessInstanceResult;
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
-import io.camunda.zeebe.spring.test.ZeebeSpringTest;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.jupiter.api.Disabled;
@@ -16,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@ZeebeSpringTest
+@CamundaSpringProcessTest
 public class WorkflowTest {
 
-  @Autowired ZeebeClient zeebeClient;
+  @Autowired
+  CamundaClient zeebeClient;
 
   @Test
   public void shouldReturnResult() {
