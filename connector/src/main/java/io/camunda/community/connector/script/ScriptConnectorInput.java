@@ -8,6 +8,7 @@ import io.camunda.community.connector.script.ScriptConnectorInput.Type.Embedded;
 import io.camunda.community.connector.script.ScriptConnectorInput.Type.Resource;
 import io.camunda.connector.generator.dsl.Property.FeelMode;
 import io.camunda.connector.generator.java.annotation.TemplateProperty;
+import io.camunda.connector.generator.java.annotation.TemplateProperty.PropertyType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.Map;
@@ -30,7 +31,7 @@ public record ScriptConnectorInput(
   })
   public sealed interface Type {
     record Embedded(
-        @TemplateProperty(label = "Script", description = "The script to be executed") @NotNull
+        @TemplateProperty(label = "Script", description = "The script to be executed", type = PropertyType.Text) @NotNull
             String embedded,
         @TemplateProperty(
                 label = "Script Language",

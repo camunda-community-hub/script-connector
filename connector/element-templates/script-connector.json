@@ -73,7 +73,7 @@
       "equals" : "embedded",
       "type" : "simple"
     },
-    "type" : "String"
+    "type" : "Text"
   }, {
     "id" : "script.language",
     "label" : "Script Language",
