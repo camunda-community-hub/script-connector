@@ -76,7 +76,7 @@ The docker image for the connector runtime is published as GitHub package.
 docker pull ghcr.io/camunda-community-hub/script-connector/runtime:latest
 ```
 
-Configure the connection to the Zeebe broker by setting the environment property `CAMUNDA_CLIENT_ZEEBE_GRPCADDRESS` (default: `localhost:26500`)
+Configure the connection to the Zeebe broker by following the [official documentation of the camunda spring boot starter](https://docs.camunda.io/docs/apis-tools/camunda-spring-boot-starter/getting-started/).
 
 The docker-compose file shows an example how this works.
 
