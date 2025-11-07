@@ -31,6 +31,8 @@ To register custom file extensions, you can use the [`LanguageProviderExtension`
 
 ### Legacy
 
+>The legacy implementation is still in place to support older implementations. Please use the new connector!
+
 The legacy connector provides compatibility with the previous implementation `zeebe-script-worker`.
 
 >The context does not offer access to `job` or `zeebeClient` anymore.
