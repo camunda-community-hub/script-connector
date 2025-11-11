@@ -4,6 +4,3 @@ camunda:
       enabled: false
     webhook:
       enabled: false
-operate:
-  client:
-    enabled: false
