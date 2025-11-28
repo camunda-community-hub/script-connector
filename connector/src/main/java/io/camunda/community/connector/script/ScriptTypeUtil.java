@@ -10,8 +10,7 @@ public class ScriptTypeUtil {
     return extractScript(script, new ScriptResourceProvider());
   }
 
-  public static String extractScript(
-      Type script, ScriptResourceProvider scriptResourceProvider) {
+  public static String extractScript(Type script, ScriptResourceProvider scriptResourceProvider) {
     if (script instanceof Embedded e) {
       return e.embedded();
     } else if (script instanceof Resource(String resource)) {

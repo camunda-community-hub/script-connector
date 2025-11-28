@@ -17,7 +17,8 @@ import java.util.Map;
 public record ScriptConnectorInput(
     @TemplateProperty(label = "Script description", description = "How the script is implemented")
         @NotNull
-        @Valid ScriptConnectorInput.Type script,
+        @Valid
+        ScriptConnectorInput.Type script,
     @TemplateProperty(
             label = "Script context",
             feel = FeelMode.required,
@@ -31,7 +32,11 @@ public record ScriptConnectorInput(
   })
   public sealed interface Type {
     record Embedded(
-        @TemplateProperty(label = "Script", description = "The script to be executed", type = PropertyType.Text) @NotNull
+        @TemplateProperty(
+                label = "Script",
+                description = "The script to be executed",
+                type = PropertyType.Text)
+            @NotNull
             String embedded,
         @TemplateProperty(
                 label = "Script Language",

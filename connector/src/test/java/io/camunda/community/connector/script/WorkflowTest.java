@@ -4,8 +4,8 @@ import static io.camunda.community.connector.script.ScriptConnector.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.camunda.client.CamundaClient;
-import io.camunda.process.test.api.CamundaSpringProcessTest;
 import io.camunda.client.api.response.ProcessInstanceResult;
+import io.camunda.process.test.api.CamundaSpringProcessTest;
 import io.camunda.zeebe.model.bpmn.Bpmn;
 import io.camunda.zeebe.model.bpmn.BpmnModelInstance;
 import java.util.Collections;
@@ -19,8 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @CamundaSpringProcessTest
 public class WorkflowTest {
 
-  @Autowired
-  CamundaClient zeebeClient;
+  @Autowired CamundaClient zeebeClient;
 
   @Test
   public void shouldReturnResult() {
