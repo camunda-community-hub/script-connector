@@ -1,30 +1,24 @@
 {
   "extends": [
     "config:recommended",
-    "schedule:automergeNonOfficeHours"
+    "schedule:automergeNonOfficeHours",
+    ":automergeAll"
   ],
   "labels": [
     "dependencies"
   ],
   "packageRules": [
     {
+      "description": "Never update Script connector dependencies",
       "enabled": false,
       "matchPackageNames": [
         "io.camunda.connectors.community{/,}**"
       ]
     },
     {
-      "matchBaseBranches": [
-        "main"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "automerge": true
-    },
-    {
-      "matchManagers": [
-        "maven"
+      "description": "Never update camunda dependencies minor and major after a release",
+      "matchPackageNames": [
+        "io.camunda:*{/,}**"
       ],
       "matchBaseBranches": [
         "/^release/.*/"
@@ -34,14 +28,6 @@
         "minor"
       ],
       "enabled": false
-    },
-    {
-      "matchUpdateTypes": [
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
     },
     {
       "matchManagers": [
