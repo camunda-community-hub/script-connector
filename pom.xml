@@ -23,7 +23,7 @@
     <java.version>${version.java}</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <version.spring-boot>3.5.10</version.spring-boot>
+    <version.spring-boot>3.5.11</version.spring-boot>
     <version.camunda>8.8.13</version.camunda>
     <version.camunda-connectors>8.8.7</version.camunda-connectors>
     <version.groovy>5.0.4</version.groovy>
