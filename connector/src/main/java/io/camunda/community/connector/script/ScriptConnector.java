@@ -14,7 +14,8 @@ import io.camunda.connector.generator.java.annotation.ElementTemplate;
     name = "Script Connector",
     version = 1,
     inputDataClass = ScriptConnectorInput.class,
-    description = "A connector to execute a script")
+    description = "A connector to execute a script",
+    icon = "script.svg")
 public class ScriptConnector implements OutboundConnectorFunction {
   public static final String SCRIPT_CONNECTOR_ID = "io.camunda.community:script-connector";
   public static final int SCRIPT_CONNECTOR_VERSION = 1;

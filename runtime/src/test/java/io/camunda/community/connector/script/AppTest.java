@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @CamundaSpringProcessTest
 public class AppTest {
 
-  @Autowired CamundaClient zeebeClient;
+  @Autowired CamundaClient camundaClient;
 
   @Test
   void shouldRun() {
@@ -49,9 +49,13 @@ public class AppTest {
 
   private ProcessInstanceResult deployAndCreateInstance(
       final BpmnModelInstance workflow, Map<String, Object> variables) {
-    zeebeClient.newDeployResourceCommand().addProcessModel(workflow, "process.bpmn").send().join();
+    camundaClient
+        .newDeployResourceCommand()
+        .addProcessModel(workflow, "process.bpmn")
+        .send()
+        .join();
 
-    return zeebeClient
+    return camundaClient
         .newCreateInstanceCommand()
         .bpmnProcessId("process")
         .latestVersion()

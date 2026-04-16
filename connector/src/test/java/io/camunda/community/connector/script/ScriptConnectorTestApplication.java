@@ -19,9 +19,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ZeebeScriptWorkerApplication {
+public class ScriptConnectorTestApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ZeebeScriptWorkerApplication.class, args);
+    SpringApplication.run(ScriptConnectorTestApplication.class, args);
   }
 }
