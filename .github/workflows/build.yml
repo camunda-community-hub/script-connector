@@ -34,7 +34,7 @@ jobs:
         compose-file: "./docker/docker-compose.yml"
         test-command: "java -jar runtime/target/script-connector-runtime.jar test"
     - name: try to run connector runtime
-      run: java -jar runtime/target/script-connector-runtime.jar test
+      run: java -jar -Dserver.port=0 runtime/target/script-connector-runtime.jar test
       timeout-minutes: 1
     - name: Publish Unit Test Results
       id: publish
