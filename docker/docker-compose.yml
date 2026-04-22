@@ -4,14 +4,14 @@ networks:
 
 services:
   camunda-data-init:
-    image: camunda/camunda:8.9.0
+    image: camunda/camunda:8.9.1
     user: "0:0"
     entrypoint: [ "/bin/sh", "-c", "chown -R 1001:1001 /usr/local/camunda/camunda-data && chmod 775 /usr/local/camunda/camunda-data" ]
     volumes:
     - camunda-data:/usr/local/camunda/camunda-data
     restart: "no"
   camunda:
-    image: camunda/camunda:8.9.0
+    image: camunda/camunda:8.9.1
     container_name: camunda
     ports:
     - "26500:26500"
