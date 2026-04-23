@@ -58,7 +58,7 @@ services:
       start_period: 30s
   script-connector-bundled:
     container_name: script-connector-bundled
-    image: camunda/connectors-bundle:8.9.0
+    image: camunda/connectors-bundle:8.9.1
     environment:
     - CAMUNDA_CLIENT_GRPCADDRESS=http://camunda:26500
     - CAMUNDA_CLIENT_RESTADDRESS=http://camunda:8080
