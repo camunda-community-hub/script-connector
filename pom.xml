@@ -25,7 +25,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <version.spring-boot>4.0.6</version.spring-boot>
     <version.camunda>8.9.1</version.camunda>
-    <version.camunda-connectors>8.9.0</version.camunda-connectors>
+    <version.camunda-connectors>8.9.1</version.camunda-connectors>
     <version.groovy>5.0.5</version.groovy>
     <version.kotlin>2.3.21</version.kotlin>
     <kotlin.version>${version.kotlin}</kotlin.version>
