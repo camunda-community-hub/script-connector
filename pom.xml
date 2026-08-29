@@ -26,7 +26,7 @@
     <version.spring-boot>4.1.1</version.spring-boot>
     <version.camunda>8.9.17</version.camunda>
     <version.camunda-connectors>8.9.8</version.camunda-connectors>
-    <version.groovy>5.1.0</version.groovy>
+    <version.groovy>5.1.1</version.groovy>
     <version.kotlin>2.4.10</version.kotlin>
     <kotlin.version>${version.kotlin}</kotlin.version>
     <version.graalvm>25.3.4.1</version.graalvm>
