@@ -27,7 +27,7 @@
     <version.camunda>8.9.19</version.camunda>
     <version.camunda-connectors>8.9.9</version.camunda-connectors>
     <version.groovy>5.1.2</version.groovy>
-    <version.kotlin>2.4.10</version.kotlin>
+    <version.kotlin>2.4.20</version.kotlin>
     <kotlin.version>${version.kotlin}</kotlin.version>
     <version.graalvm>25.3.4.1</version.graalvm>
     <plugin.version.function-maven-plugin>1.0.2</plugin.version.function-maven-plugin>
