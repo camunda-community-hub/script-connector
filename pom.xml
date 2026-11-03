@@ -29,7 +29,7 @@
     <version.groovy>6.0.0</version.groovy>
     <version.kotlin>2.4.21</version.kotlin>
     <kotlin.version>${version.kotlin}</kotlin.version>
-    <version.graalvm>25.4.4.1.1</version.graalvm>
+    <version.graalvm>25.5.5.0.3</version.graalvm>
     <plugin.version.function-maven-plugin>1.0.2</plugin.version.function-maven-plugin>
     <plugin.version.maven-enforcer-plugin>3.7.0</plugin.version.maven-enforcer-plugin>
     <plugin.version.maven-install-plugin>3.2.0</plugin.version.maven-install-plugin>
