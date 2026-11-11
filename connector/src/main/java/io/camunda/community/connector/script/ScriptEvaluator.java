@@ -36,18 +36,15 @@ public class ScriptEvaluator {
 
   public ScriptEvaluator() {
     ScriptEvaluatorExtension.load()
-        .forEach(
-            e ->
-                e.getEvaluatedLanguage()
-                    .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
+        .forEach(e ->
+            e.getEvaluatedLanguage()
+                .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
   }
 
   public ScriptEvaluator(Set<ScriptEvaluatorExtension> extensions) {
     this();
-    extensions.forEach(
-        e ->
-            e.getEvaluatedLanguage()
-                .forEach(language -> scriptEvaluatorExtensions.put(language, e)));
+    extensions.forEach(e ->
+        e.getEvaluatedLanguage().forEach(language -> scriptEvaluatorExtensions.put(language, e)));
   }
 
   public Object evaluate(Type script, Map<String, Object> variables) {

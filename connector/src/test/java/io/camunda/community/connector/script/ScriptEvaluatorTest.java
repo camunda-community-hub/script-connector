@@ -85,9 +85,8 @@ public class ScriptEvaluatorTest {
 
   @Test
   public void shouldThrowExceptionIfScriptEvaluationFails() {
-    assertThatThrownBy(
-            () ->
-                scriptEvaluator.evaluate(new Embedded("???", "javascript"), Collections.emptyMap()))
+    assertThatThrownBy(() ->
+            scriptEvaluator.evaluate(new Embedded("???", "javascript"), Collections.emptyMap()))
         .hasMessage("Failed to evaluate script '???' (javascript)");
   }
 }
