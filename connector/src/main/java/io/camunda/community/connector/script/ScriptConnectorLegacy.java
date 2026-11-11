@@ -34,22 +34,18 @@ public class ScriptConnectorLegacy implements OutboundConnectorFunction {
 
   private String getLanguage(Map<String, String> customHeaders) {
     return ofNullable(customHeaders.get(PARAM_SCRIPT_FORMAT))
-        .orElseGet(
-            () ->
-                ofNullable(customHeaders.get(PARAM_LANGUAGE))
-                    .orElseThrow(
-                        () ->
-                            new RuntimeException(
-                                String.format(
-                                    "Missing required custom header '%s'", PARAM_LANGUAGE))));
+        .orElseGet(() ->
+            ofNullable(customHeaders.get(PARAM_LANGUAGE))
+                .orElseThrow(() ->
+                    new RuntimeException(
+                        String.format("Missing required custom header '%s'", PARAM_LANGUAGE))));
   }
 
   private String getScript(Map<String, String> customHeaders) {
     return ofNullable(customHeaders.get(PARAM_HEADER))
-        .orElseThrow(
-            () ->
-                new RuntimeException(
-                    String.format("Missing required custom header '%s'", PARAM_HEADER)));
+        .orElseThrow(() ->
+            new RuntimeException(
+                String.format("Missing required custom header '%s'", PARAM_HEADER)));
   }
 
   private Map<String, Object> getVariablesAsMap(OutboundConnectorContext outboundConnectorContext) {
